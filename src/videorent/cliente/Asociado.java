@@ -79,9 +79,8 @@ public class Asociado extends Cliente {
      * @param apellido
      * @param telefono
      */
-    public Asociado(String cedula, String nombre, String apellido,
-                String telefono) {
-        super(cedula, nombre, apellido, telefono);
+    public Asociado(String cedula, String nombre, String telefono) {
+        super(cedula, nombre, telefono);
     }
 
     /**
@@ -101,8 +100,10 @@ public class Asociado extends Cliente {
      * @param telefono
      * @param direccion
      */
-    public Asociado(String codigo, char membresia, String estado, String cedula, String nombre, String apellido, String telefono, String direccion) {
-        super(cedula, nombre, apellido, telefono);
+    public Asociado(String codigo, char membresia, String estado, String cedula,
+            String nombre, String apellido, String telefono, String direccion) {
+        super(cedula, nombre, telefono);
+        this.apellido = apellido;
         this.codigo = codigo;
         this.membresia = membresia;
         this.estado = estado.toUpperCase().charAt(0);

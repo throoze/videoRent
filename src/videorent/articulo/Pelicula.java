@@ -29,7 +29,7 @@ public class Pelicula extends ArticuloAudiovisual{
      * @param secuela  EL nombre de la secuela (si existe)
      */
     public Pelicula(String genero, String actores, String nombre, int anio, String formato, String director, String escritor, String secuela) {
-        super(genero, actores, nombre, anio);
+        super(genero, actores, nombre, anio, "CAMBIAR ESTO");
         this.formato = formato;
         this.director = director;
         this.escritor = escritor;

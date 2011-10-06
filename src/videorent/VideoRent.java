@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import videorent.acciones.AbandonarTienda;
@@ -206,6 +207,19 @@ public class VideoRent {
         return null;
     }
 
+    private void retirarDeStock(String codigo){
+        Set<Articulo> articulos = this.stock.keySet();
+        Iterator iter = articulos.iterator();
+        Articulo aux;
+        while (iter.hasNext()){
+            aux = (Articulo) iter.next();
+            if (aux.getCodigo().equals(codigo)){
+                this.stock.put(aux, this.stock.get(aux) - 1);
+                break;
+            }
+        }
+    }
+
     private void init(){
         // Almacenamiento
         this.stock = new HashMap<Articulo,Integer>();
@@ -330,19 +344,25 @@ public class VideoRent {
             // saco la primera letra y veo a ke constructor llamo (pelicula, serie, etc)
             char temp = tipoOp.charAt(0);
             if(temp=='P'){
-                a = new Pelicula(tokens[4], tokens[8], tokens[2], Integer.parseInt(tokens[3]), tokens[5], tokens[6], tokens[7], tokens[9]);
+                a = new Pelicula(tokens[4], tokens[8], tokens[2],
+                        Integer.parseInt(tokens[3]), tokens[5], tokens[6],
+                        tokens[7], tokens[9]);
             } else if(temp=='S'){
-                a = new TemporadaSerie(tokens[6], tokens[2], Integer.parseInt(tokens[4]), Integer.parseInt(tokens[3]), tokens[5], Integer.parseInt(tokens[7]));
+                a = new TemporadaSerie(tokens[6], tokens[2],
+                        Integer.parseInt(tokens[4]),
+                        Integer.parseInt(tokens[3]), tokens[5],
+                        Integer.parseInt(tokens[7]));
             } else if(temp=='R'){
-                a = new JuegoRecreativo(tokens[2], Integer.parseInt(tokens[6]), tokens[5], tokens[3], tokens[4]);
+                a = new JuegoRecreativo(tokens[2], Integer.parseInt(tokens[6]),
+                        tokens[5], tokens[3], tokens[4], tokens[0]);
             } else if(temp=='E'){
-                a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]), tokens[4], tokens[3]);
+                a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]),
+                        tokens[4], tokens[3], tokens[0]);
             }
             this.stock.put(a, Integer.parseInt(tokens[1]));
         }
         else
             throw new IOException("Error en el archivo de entrada de artículos");
-
         return a;
     }
 
@@ -461,89 +481,107 @@ public class VideoRent {
         }
     }
 
-    private void procesar() throws Exception {
-
-        //si c=='a', alguien se kiere asociar. leo ac1
-        for(int y=0;y<this.numDias;y++){
-            Accion ac1 = this.accClientes.get(y);
-
-            char c = ac1.getId();
-            int aux = 0;
-            if (c=='a') {
-                Asociarse asociar = (Asociarse)ac1;
-                Asociado aso =  new Asociado(String.valueOf(this.proxIdCliente),
+    private void procesarAsociarse(Asociarse accion) {
+        Asociarse asociar = accion;
+        Asociado aso =  new Asociado(String.valueOf(this.proxIdCliente),
                     asociar.getTipoMembresia().toUpperCase().charAt(0),
                     asociar.getTipoMembresia(), asociar.getCedula(),
                     asociar.getNombre(), asociar.getApellido(),
                     asociar.getTelefono(), asociar.getDireccion());
-               this.asociados.add(aso);
+        this.asociados.add(aso);
+    }
 
+    private void procesarActualizarTarjeta(ActualizarTarjeta accion,
+            int indice) throws Exception {
+        // Actualizo la tarjeta y busco a su dueño en asociados y los
+        // asigno mutuamente
+        ActualizarTarjeta actualizar = accion;
+        for (int j = 0; j < this.asociados.size(); j++) {
+            Asociado asoci = this.asociados.get(j);
+            if (asoci.getCodigo().equals(actualizar.getCodCliente())) {
+                indice = this.asociados.indexOf(asoci);
+            }
+        }
+        if (indice == 0) {
+            throw new Exception("Error : El dueño de la tarjeta número "
+                    + actualizar.getNumTarjeta() + " no esta asociado");
+        }
+        String[] strFecha = actualizar.getVencimiento().split("/");
+        TarjetaCredito tarjeta = new TarjetaCredito(
+                Long.parseLong(actualizar.getNumTarjeta()),
+                actualizar.getBanco(),
+                Integer.parseInt(actualizar.getCodSeguridad()), new Date(
+                Integer.parseInt(strFecha[1]),
+                Integer.parseInt(strFecha[0]), 1),
+                null);
+        this.asociados.get(indice).setTarjeta(tarjeta);
+        tarjeta.setDuenio(this.asociados.get(indice));
+    }
+
+    private void procesarLlevarParaCompra(LlevarParaCompra accion) {
+        ArrayList<String> lista;
+        if (accion.getCodCliente() == null) {
+            Cliente cliente = new Cliente(accion.getCedula(),
+                    accion.getNombre(),
+                    accion.getTelefono());
+            lista = this.carritoVenta.get(cliente);
+            if (lista == null) {
+                this.carritoVenta.put(cliente, new ArrayList<String>());
+                lista = this.carritoVenta.get(cliente);
+            }
+            lista.add(accion.getCodArticulo());
+            this.carritoVenta.put(cliente, lista);
+        } else {
+            Asociado cliente = this.asociadoPorCodigo(
+                    accion.getCodCliente());
+            lista = this.carritoVenta.get(cliente);
+            if (lista == null) {
+                this.carritoVenta.put(cliente, new ArrayList<String>());
+                lista = this.carritoVenta.get(cliente);
+            }
+            lista.add(accion.getCodArticulo());
+            this.carritoVenta.put(cliente, lista);
+        }
+        this.retirarDeStock(accion.getCodArticulo());
+    }
+
+    private void procesarLlevarParaAlquiler(LlevarParaAlquiler accion){
+        // meto el codCliente del asociado y el codArticulo en el carrito de alquiler
+        ArrayList<String> arl;
+        arl = this.carritoAlquiler.get(accion.getCodCliente());
+        if (arl == null) {
+            arl = new ArrayList<String>();
+        }
+
+        arl.add(accion.getCodArticulo());
+        this.carritoAlquiler.put(accion.getCodCliente(), arl);
+    }
+
+    private void procesarPagar(Pagar accion) {
+        Cliente
+        if () {
+
+        }
+        //sacar del carrito y hacer factura asociada
+        t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
+    }
+
+    private void procesar() throws Exception {
+        //si c=='a', alguien se kiere asociar. leo ac1
+        for(int y=0;y<this.numDias;y++){
+            Accion ac1 = this.accClientes.get(y);
+            char c = ac1.getId();
+            int aux = 0;
+            if (c=='a') {
+                procesarAsociarse((Asociarse) ac1);
             } else if (c=='t') {
-                // Actualizo la tarjeta y busco a su dueño en asociados y los
-                // asigno mutuamente
-                ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
-
-                for(int j=0;j<this.asociados.size();j++){
-                    Asociado asoci = this.asociados.get(j);
-                    if(asoci.getCodigo().equals(actualizar.getCodCliente())){
-                        aux = this.asociados.indexOf(asoci);
-                    }
-                }
-                if (aux==0){
-                    throw new Exception ("Error : El dueño de la tarjeta número "
-                         + actualizar.getNumTarjeta() + " no esta asociado");
-                }
-                String[] strFecha = actualizar.getVencimiento().split("/");
-                TarjetaCredito tarjeta = new TarjetaCredito(
-                        Long.parseLong(actualizar.getNumTarjeta()), actualizar.getBanco(),
-                        Integer.parseInt(actualizar.getCodSeguridad()), new Date(
-                                Integer.parseInt(strFecha[1]),
-                                Integer.parseInt(strFecha[0]),1),
-                        null);
-                this.asociados.get(aux).setTarjeta(tarjeta);
-                tarjeta.setDuenio(this.asociados.get(aux));
-
+                procesarActualizarTarjeta((ActualizarTarjeta) ac1, aux);
             } else if (c=='c') {
-                LlevarParaCompra accion = ((LlevarParaCompra) ac1);
-                ArrayList<String> lista;
-                if (accion.getCodCliente() == null) {
-                    Cliente cliente = new Cliente(accion.getCedula(),
-                                                  accion.getNombre(),
-                                                  accion.getTelefono());
-                    lista = this.carritoVenta.get(cliente);
-                    if (lista == null) {
-                        this.carritoVenta.put(cliente, new ArrayList<String>());
-                        lista = this.carritoVenta.get(cliente);
-                    }
-                    lista.add(accion.getCodArticulo());
-                    this.carritoVenta.put(cliente, lista);
-                } else {
-                    Asociado cliente = this.asociadoPorCodigo(
-                            accion.getCodCliente());
-                    lista = this.carritoVenta.get(cliente);
-                    if (lista == null) {
-                        this.carritoVenta.put(cliente, new ArrayList<String>());
-                        lista = this.carritoVenta.get(cliente);
-                    }
-                    lista.add(accion.getCodArticulo());
-                    this.carritoVenta.put(cliente, lista);
-                }
-
+                this.procesarLlevarParaCompra((LlevarParaCompra) ac1);
             } else if (c=='r') {
-                // meto el codCliente del asociado y el codArticulo en el carrito de alquiler
-                LlevarParaAlquiler lleva = (LlevarParaAlquiler)ac1;
-                ArrayList<String> arl;
-                arl = this.carritoAlquiler.get(lleva.getCodCliente());
-                if (arl == null){
-                   arl = new ArrayList<String>();
-                }
-
-                arl.add(lleva.getCodArticulo());
-                this.carritoAlquiler.put(lleva.getCodCliente(), arl);
-
+                this.procesarLlevarParaAlquiler((LlevarParaAlquiler) ac1);
             } else if (c=='p') {
-                //sacar del carrito y hacer factura asociada
-                t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
+                this.procesarPagar((Pagar) ac1);
             } else if(c=='b'){
                 t = new AbandonarTienda(tokens[1]);
                 //limpiar carrito con ese cliente

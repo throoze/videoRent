@@ -8,19 +8,21 @@ package videorent.articulo;
  * @author <a href="victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  */
 public abstract class Articulo {
+    protected String codigo;
     protected String nombre;
     protected int anio;
-    public int tiempoPrestamo;
-    public double montoMulta;
-    public double precioAlquiler;
-    public double precioVenta;
+    protected int tiempoPrestamo;
+    protected double montoMulta;
+    protected double precioAlquiler;
+    protected double precioVenta;
 
     /**
      * Constructor de la clase
      * @param nombre El nombre del artículo
      * @param anio El año de creación del artículo
      */
-    public Articulo(String nombre, int anio) {
+    public Articulo(String nombre, int anio, String codigo) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.anio = anio;
     }
@@ -118,6 +120,25 @@ public abstract class Articulo {
      * @return
      */
     public abstract Double getMulta(int dias);
+
+    /**
+     * Devuelve el código de este artículo.
+     *
+     * @return el código de este artículo.
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Establece el código de este artículo.
+     *
+     * @param codigo nuevo código.
+     */
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

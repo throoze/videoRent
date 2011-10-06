@@ -21,8 +21,8 @@ public class JuegoEducativo extends ArticuloInteractivo{
      * @param plataforma La plataforma donde corre el juego
      * @param habilidad Habilidad desarrollada con el juego
      */
-    public JuegoEducativo(String nombre, int anio, String plataforma, String habilidad) {
-        super(nombre, anio, plataforma);
+    public JuegoEducativo(String nombre, int anio, String plataforma, String habilidad, String codigo) {
+        super(nombre, anio, plataforma, codigo);
         this.habilidad = habilidad;
         this.tiempoPrestamo = 5;
         this.montoMulta = 1.0;

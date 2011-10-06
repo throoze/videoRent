@@ -18,8 +18,8 @@ public abstract class ArticuloInteractivo extends Articulo {
      * @param anio EL año de creación del artículo de tipo interactivo
      * @param plataforma La plataforma en la que corre el artículo interactivo
      */
-    public ArticuloInteractivo(String nombre, int anio, String plataforma) {
-        super(nombre, anio);
+    public ArticuloInteractivo(String nombre, int anio, String plataforma, String codigo) {
+        super(nombre, anio, codigo);
         this.plataforma = plataforma;
     }
 

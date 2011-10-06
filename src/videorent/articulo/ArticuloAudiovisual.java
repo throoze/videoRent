@@ -24,8 +24,9 @@ public class ArticuloAudiovisual extends Articulo {
      * @param nombre El nombre del articulo audio-visual
      * @param anio  El año de creación
      */
-    public ArticuloAudiovisual(String genero, String actores, String nombre, int anio) {
-        super(nombre, anio);
+    public ArticuloAudiovisual(String genero, String actores, String nombre,
+            int anio, String codigo) {
+        super(nombre, anio, codigo);
         this.genero = genero;
         this.actores = actores;
         this.tiempoPrestamo = 3;

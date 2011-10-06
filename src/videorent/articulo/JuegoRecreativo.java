@@ -23,8 +23,9 @@ public class JuegoRecreativo extends ArticuloInteractivo {
      * @param genero
      * @param desarrollador
      */
-    public JuegoRecreativo(String nombre, int anio, String plataforma, String genero, String desarrollador) {
-        super(nombre, anio, plataforma);
+    public JuegoRecreativo(String nombre, int anio, String plataforma,
+            String genero, String desarrollador, String codigo) {
+        super(nombre, anio, plataforma, codigo);
         this.genero = genero;
         this.desarrollador = desarrollador;
         this.tiempoPrestamo = 2;
