@@ -36,30 +36,38 @@ import videorent.articulo.Pelicula;
  */
 public class VideoRent {
 
-    private BufferedReader in;
-    private PrintStream out;
+    private BufferedReader in1;
+    private BufferedReader in2;
+    private BufferedReader in3;
+    private BufferedReader in4;
+    private PrintStream out1;
+    private PrintStream out2;
     //private Banco banco;
 
-    public VideoRent() {
-        in = new BufferedReader(new InputStreamReader(System.in));
-        out = System.out;
-        //banco = new Banco();
-    }
+   public VideoRent(String fin1,String fin2, String fin3, String fin4, String fout1, String fout2) {
 
-    public VideoRent(String fin, String fout) {
-
-        this();
-
-        BufferedReader in = null;
-        PrintStream out = null;
+        BufferedReader in1 = null;
+        BufferedReader in2 = null;
+        BufferedReader in3 = null;
+        BufferedReader in4 = null;
+        PrintStream out1 = null;
+        PrintStream out2 = null;
 
         try {
-            in = new BufferedReader(new FileReader(fin));
-            out = new PrintStream(fout);
+            in1 = new BufferedReader(new FileReader(fin1));
+            in2 = new BufferedReader(new FileReader(fin2));
+            in3 = new BufferedReader(new FileReader(fin3));
+            in4 = new BufferedReader(new FileReader(fin4));
+            out1 = new PrintStream(fout1);
+            out2 = new PrintStream(fout2);
 
             // si no hubo error, los asigno a los dos
-            this.in = in;
-            this.out = out;
+            this.in1 = in1;
+            this.in2 = in2;
+            this.in3 = in3;
+            this.in4 = in4;
+            this.out1 = out1;
+            this.out2 = out2;
         } catch (FileNotFoundException fnfe) {
             System.err.println("Error al crear archivos, usando entrada y" +
                     " salida estandar");
@@ -116,12 +124,20 @@ public class VideoRent {
     }
 
     private void procesar() {
-        String linea = "";
+        String linea1 = "";
+        String linea2 = "";
+        String linea3 = "";
+        String linea4 = "";
         try {
-            while ((linea = in.readLine()) != null) {
+            while ((linea1 = in1.readLine() && ) != null) {
                 Accion t = crearAccionCliente(linea);
+                ////////////////////////////////////
+                //
+                // ACA FALTA HACER ALGO CON LA T KE DEVUELVE ESTA VAINA
+                //
+                //////////////////////////////////////
 //                Status s = banco.ejecutarTransaccion(t);
-                //out.println(s.toString());
+               // out1.println(s.toString());
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
