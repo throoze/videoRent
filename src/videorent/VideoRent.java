@@ -213,6 +213,8 @@ public class VideoRent {
         this.asociados = new ArrayList<Asociado>();
         this.carritoVenta = new HashMap<Cliente, ArrayList<String>>();
 
+        this.carritoAlquiler = new HashMap<String, ArrayList<String>>();
+
         // Procesamiento
         this.accClientes = new ArrayList<Accion>();
         this.accEmpleados = new ArrayList<Accion>();
@@ -460,9 +462,11 @@ public class VideoRent {
     }
 
     private void procesar() throws Exception {
+
         //si c=='a', alguien se kiere asociar. leo ac1
-        for(int y=0;y<numDias;y++){
-            Accion ac1 = accClientes.get(y);
+        for(int y=0;y<this.numDias;y++){
+            Accion ac1 = this.accClientes.get(y);
+
             char c = ac1.getId();
             int aux = 0;
             if (c=='a') {
@@ -486,7 +490,8 @@ public class VideoRent {
                     }
                 }
                 if (aux==0){
-                    throw new Exception ("Error : El dueño de esa tarjeta no esta asociado");
+                    throw new Exception ("Error : El dueño de la tarjeta número "
+                         + actualizar.getNumTarjeta() + " no esta asociado");
                 }
                 String[] strFecha = actualizar.getVencimiento().split("/");
                 TarjetaCredito tarjeta = new TarjetaCredito(
@@ -523,17 +528,28 @@ public class VideoRent {
                     lista.add(accion.getCodArticulo());
                     this.carritoVenta.put(cliente, lista);
                 }
-                
+
             } else if (c=='r') {
-                t = new LlevarParaAlquiler(tokens[1],tokens[2]);
+                // meto el codCliente del asociado y el codArticulo en el carrito de alquiler
+                LlevarParaAlquiler lleva = (LlevarParaAlquiler)ac1;
+                ArrayList<String> arl;
+                arl = this.carritoAlquiler.get(lleva.getCodCliente());
+                if (arl == null){
+                   arl = new ArrayList<String>();
+                }
+
+                arl.add(lleva.getCodArticulo());
+                this.carritoAlquiler.put(lleva.getCodCliente(), arl);
+
             } else if (c=='p') {
                 //sacar del carrito y hacer factura asociada
                 t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
-            } else if(tipoOp.equals("b")){
+            } else if(c=='b'){
                 t = new AbandonarTienda(tokens[1]);
                 //limpiar carrito con ese cliente
-            } else if(tipoOp.equals("d")){
+            } else if(c=='d'){
                 t = new DevolverArticulo(tokens[1],tokens[2]);
+
             } else if(tipoOp.equals("e")){
                 t = new PedirRecogerArticulo(tokens[1],tokens[2]);
             }
@@ -552,7 +568,7 @@ public class VideoRent {
      * Método Main.
      * @param args argumentos de entrada de la linea de comandos.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         VideoRent videoRent = null;
         if (args.length == 3) {
             videoRent = new VideoRent(args[0], args[1], args[2]);
