@@ -1,0 +1,76 @@
+formato.txt
+-----------
+
+Artículos en existencia
+-----------------------
+
+Los archivos de artículos en existencia contienen un número que indica la
+cantidad de artículos diferentes en existencia, y luego una línea con los datos
+de cada artículo. Los datos almacenados son código del artículo, cantidad
+de ese artículo, y los datos mencionados en el enunciado (en ese orden). 
+Cada dato está separado por un '&'.
+
+Clientes asociados
+------------------
+
+Los archivos de los clientes asociados contienen en la primera línea 
+un número que indica la cantidad de clientes asociados, y el próximo identificador
+a asignar separados por un espacio en blanco; y luego una línea con los datos de 
+cada cliente. Los datos registrados son: código del cliente, estado, y los datos 
+mencionados en el enunciado (en ese orden). Cada dato está separado por un '&'.
+
+Acciones realizadas por los clientes
+------------------------------------
+
+Los archivos de las acciones realizadas por los clientes contienen un número 
+de días a considerar y un número de acciones a realizar, separados por un espacio
+en blanco en la primera línea, y en la segunda contiene la fecha del primer
+día a considerar en formato DD/MM/AAAA. Las acciones de cada día estan contenidas 
+entre dos lineas que contienen unicamente un '#'. Las posibles acciones son: 
+i) asociarse, denotada con 'a'; ii) actualizar datos de la tarjeta de crédito, 
+denotado con 't'; iii) llevar a caja un artículo para su compra, denotado con 
+'c'; iv) llevar a caja un artículo para su alquiler, denotado con 'r'; 
+v) pagar los artículos que se han seleccionado o la multa asociada a los
+articulos devueltos ese día, denotado con 'p'; vi) abandonar 
+la tienda (sin llevarse los artículos que han llevado a caja), denotado con 'b'; 
+vii) devolver un artículo, denotado con 'd'; viii) pedir que se recoja en 
+artículo, denotado con 'e'. Se tendrá una línea por cada acción, y además del 
+carácter que denota la acción a realizar, se incluye la información necesaria 
+para llevar a cabo la acción: i) 'a', incluye los datos del proporcionados por 
+el cliente al momento de asociarse, y el tipo de membresia (básica o premium); 
+ii) 't', incluye el código del cliente y los datos de la tarjeta de 
+crédito; iii) 'c', incluye el código del cliente y del artículo; iv) 'r', incluye 
+el código del cliente y del artículo; v) 'p', incluye el código del cliente y 
+el monto entregado; vi) 'b', incluye el código del cliente; vii) 'd', incluye el 
+código del cliente y del artículo; viii) 'e', incluye el código del cliente y
+del artículo. 
+
+Acciones realizadas por los empleados
+-------------------------------------
+
+Los archivos de las acciones realizadas por los empleados contiene una línea por
+cada acción, y las acciones de un mismo día están separadas por líneas que 
+únicamente contienen el caracter '#'. Las posibles acciones son: i) registrar a
+un asociado, denotado con 'r'; ii) cambiar el estado de un asociado, denotado 
+con 'c'; iii) cambiar los datos de una tarjeta de crédito, denotado 't';
+iv) facturar, denotado con 'f'; v) buscar un artículo en la dirección de un 
+asociado, denotado con 'b'; vi) llamar a un asociado para recordarle de devolver
+un artículo, denotado con 'l'; vii) cobrar un artículo perdido, denotado con 'p';
+viii) informar un error al cliente, denotado con 'i'. Algunas acciones requieren
+información adicional: i) 'r' incluye el código del asociado; ii) 'c' incluye el
+código del cliente y el estado al cual se cambia; iii) 't' incluye el código del 
+cliente; iv) 'f' incluye el código del cliente y el monto cobrado; v) 'b' incluye 
+el código del cliente y del artículo; vi) 'l' incluye el código del asociado; 
+vii) 'p' incluye el código del cliente y del artículo; viii) 'i' incluye el código 
+del cliente y del error (0 para cliente no registrado, 1 para artículo no está 
+en existencia, 2 para acción no permitida para este tipo de cliente, 3 para pago 
+incompleto, 4 para pago de más, 5 para cliente ya registrado, 6 para cliente 
+suspendido, 7 para cualquier otra operación no valida)
+
+Facturas generadas
+------------------
+
+Se debe producir una factura donde se incluyan los datos del cliente, y los
+datos de cada artículo comprado o rentado, así como también el monto a pagar.
+Ud. puede decidir el formato a utilizar pero debe incluir la información acá 
+mencionada.

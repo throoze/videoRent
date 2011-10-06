@@ -1,0 +1,25 @@
+9 12
+23/09/2011
+#
+a & 12345678 & Luisa & Diaz & 2348764 & calle 58, numero 34, sector prados del este, caracas, estado miranda & 9842123487654536 & Mercantil & 394 & 04/2017 & basica
+t & P1112 & 2345933914324567 & Banesco & 321 & 02/2016
+#
+c & P1112 & P1112 
+r & P1112 & R1114
+r & P1112 & E1115
+p & P1112 & 109
+#
+#
+#
+#
+d & P1112 & R1114
+p & P1112 & 20
+#
+r & B1111 & P1112
+#
+c & B1111 & R1114
+b & B1111
+#
+e & P1112 & E1115
+#
+
