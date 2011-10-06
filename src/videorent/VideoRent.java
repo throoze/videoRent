@@ -60,6 +60,9 @@ public class VideoRent {
     private PrintStream asociadosOut;
     private PrintStream prestamoOut;
     //    Nombres por defecto
+    private String strEntrada1 = "";
+    private String strEntrada2 = "";
+    private String strEntrada3 = "";
     private String defSalida1 = "AccionesEmpleadosDespues";
     private String defSalida2 = "Facturas";
     private String defSalida3 = "ArticulosExistenciaDespues";
@@ -70,6 +73,7 @@ public class VideoRent {
     private int numDias;
     private int numAcClientes;
     private int numArticulos;
+    private int proxIdCliente;
     private Date inicio;
 
     // Almacenamiento
@@ -94,6 +98,14 @@ public class VideoRent {
         PrintStream strmSalida3 = null;
         PrintStream strmSalida4 = null;
         PrintStream strmSalida5 = null;
+        this.strEntrada1 = entrada1;
+        this.strEntrada2 = entrada2;
+        this.strEntrada3 = entrada3;
+        this.defSalida1 = salida1;
+        this.defSalida2 = salida2;
+        this.defSalida3 = salida3;
+        this.defSalida4 = salida4;
+        this.defSalida5 = salida5;
 
         try {
             buffEntrada1 = new BufferedReader(new FileReader(entrada1));
@@ -138,6 +150,9 @@ public class VideoRent {
         PrintStream strmSalida3 = null;
         PrintStream strmSalida4 = null;
         PrintStream strmSalida5 = null;
+        this.strEntrada1 = entrada1;
+        this.strEntrada2 = entrada2;
+        this.strEntrada3 = entrada3;
 
         try {
             buffEntrada1 = new BufferedReader(new FileReader(entrada1));
@@ -184,8 +199,28 @@ public class VideoRent {
         this.facturas = new ArrayList<Factura>();
     }
 
-    private Asociado crearAsociado(String linea) {
+    private Asociado leerAsociado(String linea, int numLinea) {
         String[] tokens = linea.split(" & ");
+        if (tokens.length != 11) {
+                    throw new IOException("VideoRent: Mal formato en el "
+                            + "archivo de entrada <"+this.strEntrada1+">:"
+                            + "linea " + numLinea + ".\n"
+                            + "Se esperaban once elementos separados por '&'."
+                            + "\n\nEncontrado:\n\t\n"
+                            + "'" + linea + "'");
+        } else {
+            Pattern pattern = Pattern.compile("^[BP]d{4}$");
+            Matcher matcher = pattern.matcher(tokens[0]);
+            if (matcher.matches()) {
+
+            } else {
+                throw new IOException("VideoRent: Mal formato en el código del"
+                        + "asociado, en la linea "+ numLinea + ".\n\t"
+                        + "Se esperaba una letra, 'B' o 'P', seguida de cuatro"
+                        + "dígitos.\n\tEncontrado: " +
+                        tokens[0]);
+            }
+        }
         return null;
     }
 
@@ -272,12 +307,27 @@ public class VideoRent {
         this.leerAcciones();
     }
 
-    private void leerAsociados() {
+    private void leerAsociados() throws IOException {
         String linea = "";
+        int n = 0;
         try {
-            while ((linea = this.asociadosIn.readLine()) != null) {
-                Asociado asociado = crearAsociado(linea);
-                this.asociados.add(asociado);
+            if ((linea = this.asociadosIn.readLine()) != null) {
+                String[] tokens = linea.split(" ");
+                if (tokens.length != 2) {
+                    throw new IOException("VideoRent: Mal formato en el "
+                            + "archivo de entrada <"+this.strEntrada1+">:"
+                            + "linea 1. "
+                            + "Se esperaban dos elementos.\n\nEncontrado:\n\t"
+                            + "'" + linea + "'");
+                }
+                this.proxIdCliente = Integer.parseInt(tokens[1]);
+                n = Integer.parseInt(tokens[0]);
+            }
+            for (int i = 0; i < n; i++) {
+                if ((linea = this.asociadosIn.readLine()) != null) {
+                    Asociado asociado = leerAsociado(linea,i);
+                    this.asociados.add(asociado);
+                }
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
