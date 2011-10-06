@@ -39,6 +39,7 @@ public class ActualizarTarjeta extends AccionCliente {
 
     /**
      * Devuelve el código del cliente
+     *
      * @return El código del cliente
      */
     public String getCodCliente() {
@@ -47,6 +48,7 @@ public class ActualizarTarjeta extends AccionCliente {
 
     /**
      * Devuelve el banco de la tarjeta
+     *
      * @return el banco de la tarjeta
      */
     public String getBanco() {
@@ -55,6 +57,7 @@ public class ActualizarTarjeta extends AccionCliente {
 
     /**
      * Devuelve el código de seguridad de la tarjeta
+     *
      * @return el código de seguridad de la tarjeta
      */
     public String getCodSeguridad() {
@@ -63,6 +66,7 @@ public class ActualizarTarjeta extends AccionCliente {
 
     /**
      * Devuelve el número de la tarjeta
+     *
      * @return el número de la tarjeta
      */
     public String getNumTarjeta() {
@@ -71,6 +75,7 @@ public class ActualizarTarjeta extends AccionCliente {
 
     /**
      * Devuelve la fecha de vencimiento de la tarjeta.
+     *
      * @return la fecha de vencimiento de la tarjeta.
      */
     public String getVencimiento() {
