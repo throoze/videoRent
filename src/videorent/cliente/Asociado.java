@@ -52,6 +52,7 @@ public class Asociado extends Cliente {
     /**
      * Construye un nuevo {@code Asociado}, con la información suministrada. Los
      * parámetros son autoexplicativos.
+     * 
      * @param cedula
      * @param nombre
      * @param apellido
@@ -67,25 +68,28 @@ public class Asociado extends Cliente {
      * Inicializa las listas vacías de alquileres asociados al {@code Asociado}.
      * Establece el estado del {@code Asociado} a 'A' (Activo). Los parámetros
      * no comentados son autoexplicativos.
-     * @param cedula
-     * @param nombre
-     * @param apellido
-     * @param telefono
+     *
      * @param codigo
      * @param membresia Puede ser:
      *                   'B' - Corresponde a la membresía Básica.
      *                   'P' - Corresponde a la membresía Premium.
+     * @param estado Puede ser: 'A' => 'Activo', 'S' => 'Suspendido'
+     * @param cedula
+     * @param nombre
+     * @param apellido
+     * @param telefono
      * @param direccion
+     * @param alquileresActivos
+     * @param alquileresVencidos
      */
-    public Asociado(String cedula, String nombre, String apellido,
-            String telefono, String codigo, char membresia, String direccion){
+    public Asociado(String codigo, char membresia, char estado, String cedula, String nombre, String apellido, String telefono, String direccion, ArrayList<Alquiler> alquileresActivos, ArrayList<Alquiler> alquileresVencidos) {
         super(cedula, nombre, apellido, telefono);
         this.codigo = codigo;
         this.membresia = membresia;
+        this.estado = estado;
         this.direccion = direccion;
-        this.estado = 'A';
-        this.alquileresActivos = new ArrayList<Alquiler>();
-        this.alquileresVencidos = new ArrayList<Alquiler>();
+        this.alquileresActivos = alquileresActivos;
+        this.alquileresVencidos = alquileresVencidos;
     }
 
     /**
