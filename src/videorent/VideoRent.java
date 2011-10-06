@@ -85,8 +85,8 @@ public class VideoRent {
     private HashMap<Articulo,Integer> stock;
     private HashMap<Articulo,Integer> prestamo;
     private List<Asociado> asociados;
-    private HashMap<Cliente,ArrayList<Articulo>> carritos;
-
+    private HashMap<Cliente,ArrayList<String>> carritoVenta;
+    private HashMap<String ,ArrayList<String>> carritoAlquiler;
     // Procesamiento
     private ArrayList<Accion> accClientes;
     private ArrayList<Accion> accEmpleados;
@@ -198,8 +198,8 @@ public class VideoRent {
         this.stock = new HashMap<Articulo,Integer>();
         this.prestamo = new HashMap<Articulo,Integer>();
         this.asociados = new ArrayList<Asociado>();
-        this.carritos = new HashMap<Cliente, ArrayList<Articulo>>();
-
+        this.carritoVenta = new HashMap<Cliente, ArrayList<String>>();
+        this.carritoAlquiler = new HashMap<String, ArrayList<String>>();
         // Procesamiento
         this.accClientes = new ArrayList<Accion>();
         this.accEmpleados = new ArrayList<Accion>();
@@ -491,15 +491,26 @@ public class VideoRent {
             } else if (c=='c') {
                 t = new LlevarParaCompra(tokens[1],tokens[2]);
             } else if (c=='r') {
-                t = new LlevarParaAlquiler(tokens[1],tokens[2]);
+                // meto el codCliente del asociado y el codArticulo en el carrito de alquiler
+                LlevarParaAlquiler lleva = (LlevarParaAlquiler)ac1;
+                ArrayList<String> arl;
+                arl = this.carritoAlquiler.get(lleva.getCodCliente());
+                if (arl == null){
+                   arl = new ArrayList<String>();
+                }
+                
+                arl.add(lleva.getCodArticulo());
+                this.carritoAlquiler.put(lleva.getCodCliente(), arl);
+   
             } else if (c=='p') {
                 //sacar del carrito y hacer factura asociada
                 t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
-            } else if(tipoOp.equals("b")){
+            } else if(c=='b'){
                 t = new AbandonarTienda(tokens[1]);
                 //limpiar carrito con ese cliente
-            } else if(tipoOp.equals("d")){
+            } else if(c=='d'){
                 t = new DevolverArticulo(tokens[1],tokens[2]);
+                
             } else if(tipoOp.equals("e")){
                 t = new PedirRecogerArticulo(tokens[1],tokens[2]);
             }
