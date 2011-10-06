@@ -399,7 +399,7 @@ public class VideoRent {
         }
     }
     
-    private void procesar() {
+    private void procesar() throws Exception {
         //si c=='a', alguien se kiere asociar. leo ac1 
         for(int y=0;y<numDias;y++){
             Accion ac1 = accClientes.get(y);   
@@ -418,8 +418,15 @@ public class VideoRent {
                 // Actualizo la tarjeta y busco a su dueño en asociados y los 
                 // asigno mutuamente
                 ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
-                                        
-                aux = this.asociados.indexOf(actualizar.getCodCliente()); 
+                for(int j=0;j<this.asociados.size();j++){
+                    Asociado asoci = this.asociados.get(j);
+                    if(asoci.getCodigo().equals(actualizar.getCodCliente())){
+                        aux = this.asociados.indexOf(asoci);
+                    }
+                }
+                if (aux==0){
+                    throw new Exception ("Error : El dueño de esa tarjeta no esta asociado");
+                }
                 String[] strFecha = actualizar.getVencimiento().split("/");
                 TarjetaCredito tarjeta = new TarjetaCredito(
                         Long.parseLong(actualizar.getNumTarjeta()), actualizar.getBanco(),
@@ -432,12 +439,14 @@ public class VideoRent {
                                 
             } else if (c=='c') {
                 t = new LlevarParaCompra(tokens[1],tokens[2]);
-            } else if (tipoOp.equals("r")) {
+            } else if (c=='r') {
                 t = new LlevarParaAlquiler(tokens[1],tokens[2]);
-            } else if (tipoOp.equals("p")) {
+            } else if (c=='p') {
+                //sacar del carrito y hacer factura asociada
                 t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
             } else if(tipoOp.equals("b")){
                 t = new AbandonarTienda(tokens[1]);
+                //limpiar carrito con ese cliente
             } else if(tipoOp.equals("d")){
                 t = new DevolverArticulo(tokens[1],tokens[2]);
             } else if(tipoOp.equals("e")){
