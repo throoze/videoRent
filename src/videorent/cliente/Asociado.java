@@ -5,7 +5,8 @@ import videorent.alquiler.Alquiler;
 
 /**
  * Representa a los clientes que se han afiliado a VideoRent, los cuales pueden
- * realizar ciertas operaciones que un <code>Cliente</code> no puede.
+ * realizar ciertas operaciones que un {@code Cliente} no puede.
+ *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
@@ -16,7 +17,7 @@ public class Asociado extends Cliente {
     /**
      * Código del cliente. Cadena de caracteres que consta de un (1) caracter
      * alfabético y cuatro (4) numéricos. El caracter alfabético representa la
-     * membresía del @code{Asociado} y puede ser : 'B' => Membresía Básica, o
+     * membresía del {@code Asociado} y puede ser : 'B' => Membresía Básica, o
      * 'P' => Membresía Premium.
      */
     protected String codigo;
@@ -28,7 +29,8 @@ public class Asociado extends Cliente {
     protected char membresia;
 
     /**
-     * Estado del @{Asociado}. Puede ser: 'A' => Activo, o 'S' => Suspendido
+     * Estado del {@code Asociado}. Puede ser: 'A' => Activo, o 'S' =>
+     * Suspendido
      */
     protected char estado;
 
@@ -48,13 +50,13 @@ public class Asociado extends Cliente {
     private ArrayList<Alquiler> alquileresVencidos;
 
     /**
-     * Construye un nuevo @code{Asociado}, vacío.
+     * Construye un nuevo {@code Asociado}, vacío.
      */
     public Asociado() {
     }
 
     /**
-     * Construye un nuevo @code{Asociado}, con la información suministrada. Los
+     * Construye un nuevo {@code Asociado}, con la información suministrada. Los
      * parámetros son autoexplicativos.
      * @param cedula
      * @param nombre
@@ -67,10 +69,10 @@ public class Asociado extends Cliente {
     }
 
     /**
-     * Construye un nuevo @code{Asociado}, con la información suministrada.
-     * Inicializa las listas vacías de alquileres asociados al @code{Asociado}.
-     * Establece el estado del @{Asociado} a 'A' (Activo). Los parámetros no
-     * comentados son autoexplicativos
+     * Construye un nuevo {@code Asociado}, con la información suministrada.
+     * Inicializa las listas vacías de alquileres asociados al {@code Asociado}.
+     * Establece el estado del {@code Asociado} a 'A' (Activo). Los parámetros
+     * no comentados son autoexplicativos.
      * @param cedula
      * @param nombre
      * @param apellido
@@ -125,64 +127,64 @@ public class Asociado extends Cliente {
     }
 
     /**
-     * Devuelve el código del @code{Asociado}
-     * @return código del @code{Asociado}
+     * Devuelve el código del {@code Asociado}
+     * @return código del {@code Asociado}
      */
     public String getCodigo() {
         return codigo;
     }
 
     /**
-     * Establece un valor para el código del @code{Asociado}
-     * @param codigo código del @code{Asociado}
+     * Establece un valor para el código del {@code Asociado}
+     * @param codigo código del {@code Asociado}
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
     /**
-     * Devuelve la dirección del @code{Asociado}
-     * @return dirección del @code{Asociado}
+     * Devuelve la dirección del {@code Asociado}
+     * @return dirección del {@code Asociado}
      */
     public String getDireccion() {
         return direccion;
     }
 
     /**
-     * Establece un valor para la dirección del @code{Asociado}
-     * @param direccion dirección del @code{Asociado}
+     * Establece un valor para la dirección del {@code Asociado}
+     * @param direccion dirección del {@code Asociado}
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
     /**
-     * Devuelve el estado del @code{Asociado}
-     * @return estado del @code{Asociado}
+     * Devuelve el estado del {@code Asociado}
+     * @return estado del {@code Asociado}
      */
     public char getEstado() {
         return estado;
     }
 
     /**
-     * Establece un valor para el estado del @code{Asociado}
-     * @param estado estado del @code{Asociado}
+     * Establece un valor para el estado del {@code Asociado}
+     * @param estado estado del {@code Asociado}
      */
     public void setEstado(char estado) {
         this.estado = estado;
     }
 
     /**
-     * Devuelve la membresía del @code{Asociado}
-     * @return membresía del @code{Asociado}
+     * Devuelve la membresía del {@code Asociado}
+     * @return membresía del {@code Asociado}
      */
     public char getMembresia() {
         return membresia;
     }
 
     /**
-     * Establece un valor para la membresía del @code{Asociado}
-     * @param membresia  membresía del @code{Asociado}
+     * Establece un valor para la membresía del {@code Asociado}
+     * @param membresia  membresía del {@code Asociado}
      */
     public void setMembresia(char membresia) {
         this.membresia = membresia;

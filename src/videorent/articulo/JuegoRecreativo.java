@@ -1,23 +1,27 @@
 package videorent.articulo;
 
 /**
- * Representa los juegos de tipo recreativo de la tienda videoRent
+ * Representa los juegos de tipo recreativo de la tienda videoRent.
+ *
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
- * @author <a href="julesallblack@gmail.com">Julio López</a> 06-39821 
- * @author <a href="victor.dpo@gmail.com">Victor De Ponte</a> 05-38087 
+ * @author <a href="julesallblack@gmail.com">Julio López</a> 06-39821
+ * @author <a href="victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
+ * @version 0.1 06.10.2011
  */
 public class JuegoRecreativo extends ArticuloInteractivo {
     protected String genero;
     protected String desarrollador;
+
     /**
      * Constructor de la clase JuegoRecreativo
-     * Inicializa directamente los atributos tiempoPrestamo, montoMulta, 
+     * Inicializa directamente los atributos tiempoPrestamo, montoMulta,
      * precioAlquiler, y precioVenta
+     *
      * @param nombre
      * @param anio
      * @param plataforma
      * @param genero
-     * @param desarrollador 
+     * @param desarrollador
      */
     public JuegoRecreativo(String nombre, int anio, String plataforma, String genero, String desarrollador) {
         super(nombre, anio, plataforma);
@@ -28,35 +32,39 @@ public class JuegoRecreativo extends ArticuloInteractivo {
         this.precioAlquiler = 12.0;
         this.precioVenta = 250.0;
     }
+
     /**
-     * Getter del atributo desarrollador
+     * Devuelve el atributo desarrollador
      * @return El nombre del desarrollador
      */
     public String getDesarrollador() {
         return desarrollador;
     }
+
     /**
-     * Setter del atributo desarrollador
+     * Establece el atributo desarrollador
      * @param desarrollador El nombre del desarrollador
      */
     public void setDesarrollador(String desarrollador) {
         this.desarrollador = desarrollador;
     }
+
     /**
-     * Getter del atributo genero
+     * Devuelve el atributo genero
      * @return El género del juego
      */
     public String getGenero() {
         return genero;
     }
+
     /**
-     * Setter del atributo genero
+     * Establece el atributo genero
      * @param genero El género del juego
      */
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    
+
     @Override
     public Double getMulta(int dias) {
         double x = getMontoMulta()*dias;

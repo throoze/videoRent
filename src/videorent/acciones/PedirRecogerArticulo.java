@@ -35,5 +35,5 @@ public class PedirRecogerArticulo extends AccionCliente{
     public String getCodCliente() {
         return codCliente;
     }
-    
+
 }
