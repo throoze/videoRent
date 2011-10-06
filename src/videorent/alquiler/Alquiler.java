@@ -1,6 +1,5 @@
-package alquiler;
+package videorent.alquiler;
 
-import articulo.Articulo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import videorent.articulo.Articulo;
 
 /**
  * Representa un Conjunto de {@code Articulos} que han sido alquilados, en

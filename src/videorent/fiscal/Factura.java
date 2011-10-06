@@ -1,8 +1,8 @@
-package fiscal;
+package videorent.fiscal;
 
-import articulo.Articulo;
-import cliente.Asociado;
 import java.util.ArrayList;
+import videorent.articulo.Articulo;
+import videorent.cliente.Asociado;
 
 /**
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>

@@ -1,7 +1,8 @@
-package cliente;
+package videorent.cliente;
 
-import alquiler.Alquiler;
+import cliente.Cliente;
 import java.util.ArrayList;
+import videorent.alquiler.Alquiler;
 
 /**
  * Representa a los clientes que se han afiliado a VideoRent, los cuales pueden
