@@ -18,7 +18,7 @@ public class CambiarTarjeta extends AccionEmpleado {
      *
      * @param codCliente código del cliente a modificar
      */
-    public CambiarTarjeta(String codCliente, char id) {
+    public CambiarTarjeta(String codCliente) {
         super('t');
         this.codCliente = codCliente;
     }

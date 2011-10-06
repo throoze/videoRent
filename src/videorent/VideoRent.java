@@ -19,11 +19,19 @@ import videorent.acciones.AbandonarTienda;
 import videorent.acciones.Accion;
 import videorent.acciones.ActualizarTarjeta;
 import videorent.acciones.Asociarse;
+import videorent.acciones.BuscarArticulo;
+import videorent.acciones.CambiarEstado;
+import videorent.acciones.CambiarTarjeta;
+import videorent.acciones.CobrarPerdido;
 import videorent.acciones.DevolverArticulo;
+import videorent.acciones.Facturar;
+import videorent.acciones.InformarError;
 import videorent.acciones.LlevarParaAlquiler;
 import videorent.acciones.LlevarParaCompra;
 import videorent.acciones.Pagar;
 import videorent.acciones.PedirRecogerArticulo;
+import videorent.acciones.RecordarDevolucion;
+import videorent.acciones.RegistrarAsociado;
 import videorent.articulo.Articulo;
 import videorent.articulo.JuegoEducativo;
 import videorent.articulo.JuegoRecreativo;
@@ -199,7 +207,7 @@ public class VideoRent {
         this.facturas = new ArrayList<Factura>();
     }
 
-    private Asociado leerAsociado(String linea, int numLinea) {
+    private Asociado leerAsociado(String linea, int numLinea) throws IOException {
         String[] tokens = linea.split(" & ");
         if (tokens.length != 11) {
                     throw new IOException("VideoRent: Mal formato en el "
@@ -257,19 +265,21 @@ public class VideoRent {
         Accion t = null;
 
         if(tipoOp.equals("r")){
-            t = new
+            t = new RegistrarAsociado(tokens[1]);
         } else if(tipoOp.equals("c")){
-            t = new
+            t = new CambiarEstado(tokens[1], tokens[2]);
         } else if(tipoOp.equals("t")){
-            t = new
+            t = new CambiarTarjeta(tokens[1]);
+        } else if(tipoOp.equals("f")){
+            t = new Facturar(tokens[1], Double.parseDouble(tokens[2]));
         } else if(tipoOp.equals("b")){
-            t = new
+            t = new BuscarArticulo(tokens[1], tokens[2]);
         } else if(tipoOp.equals("l")){
-            t = new
+            t = new RecordarDevolucion(tokens[1]);
         } else if(tipoOp.equals("p")){
-            t = new
+            t = new CobrarPerdido(tokens[1], tokens[2]);
         } else if(tipoOp.equals("i")){
-            t = new
+            t = new InformarError(tokens[1], Integer.parseInt(tokens[2]));
         }
         return t;
     }
@@ -293,7 +303,7 @@ public class VideoRent {
                 a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]), tokens[4], tokens[3]);
             }
             
-            this.stock.put(a, tokens[1]);
+            this.stock.put(a, Integer.parseInt(tokens[1]));
         }
         else 
             throw new IOException("Error en el archivo de entrada de artículos");
@@ -301,7 +311,7 @@ public class VideoRent {
         return a;
     }
     
-    public void leer() {
+    public void leer() throws IOException {
         this.leerAsociados();
         this.leerArticulos();
         this.leerAcciones();
@@ -365,7 +375,7 @@ public class VideoRent {
      * Método Main.
      * @param args argumentos de entrada de la linea de comandos.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         VideoRent videoRent = null;
         if (args.length == 3) {
             videoRent = new VideoRent(args[0], args[1], args[2]);
