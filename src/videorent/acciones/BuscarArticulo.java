@@ -16,6 +16,7 @@ public class BuscarArticulo extends AccionEmpleado {
     /**
      * Construye una nueva acción del tipo BuscarArticulo, en base a la
      * información suministrada.
+     *
      * @param codCliente código del cliente que ordenó la búsqueda
      * @param codArtículo código del artículo a buscar.
      */
@@ -27,6 +28,7 @@ public class BuscarArticulo extends AccionEmpleado {
 
     /**
      * Devuelve el código del artículo a buscar
+     *
      * @return el código del artículo a buscar
      */
     public String getCodArtículo() {
@@ -35,6 +37,7 @@ public class BuscarArticulo extends AccionEmpleado {
 
     /**
      * Devuelve el código del cliente que tiene el artículo a buscar.
+     *
      * @return el código del cliente que tiene el artículo a buscar.
      */
     public String getCodCliente() {

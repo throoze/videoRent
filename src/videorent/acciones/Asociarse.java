@@ -1,11 +1,12 @@
 package videorent.acciones;
 
 /**
+ * Representa la acción que hace un cliente de asociarse a al tienda VideoRent.
  *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
- * @version
+ * @version 1.0 - 10.06.2011
  */
 public class Asociarse extends AccionCliente{
     private String cedula;
@@ -159,5 +160,5 @@ public class Asociarse extends AccionCliente{
     public String getTipoMembresia() {
         return tipoMembresia;
     }
-    
+
 }
