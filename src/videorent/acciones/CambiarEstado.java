@@ -18,13 +18,28 @@ public class CambiarEstado {
     /**
      * Construye una nueva acción del tipo Registrar asociado, basado en la
      * información suministrada.
+     *
      * @param codCliente código del cliente
-     * @param estado 
+     * @param estado nuevo estado del cliente
      */
     public CambiarEstado(String codCliente, String estado) {
         this.codCliente = codCliente;
         this.estado = estado;
     }
 
+    /**
+     * Devuelve el código del cliente a modificar.
+     * @return el código del cliente a modificar.
+     */
+    public String getCodCliente() {
+        return codCliente;
+    }
 
+    /**
+     * Devuelve el nuevo estado del cliente.
+     * @return el nuevo estado del cliente.
+     */
+    public String getEstado() {
+        return estado;
+    }
 }

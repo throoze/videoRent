@@ -11,6 +11,25 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class CambiarTarjeta {
+public class CambiarTarjeta extends AccionEmpleado {
+    private String codCliente;
 
+    /**
+     * Construye una nueva acción del tipo CambiarTarjeta, que cambia los datos
+     * de la tarjeta del cliente {@code codCliente}.
+     * @param codCliente código del cliente a modificar
+     * @param id identificador de la acción.
+     */
+    public CambiarTarjeta(String codCliente, char id) {
+        super(id);
+        this.codCliente = codCliente;
+    }
+
+    /**
+     * Devuelve el código del cliente a modificar.
+     * @return el código del cliente a modificar.
+     */
+    public String getCodCliente() {
+        return codCliente;
+    }
 }
