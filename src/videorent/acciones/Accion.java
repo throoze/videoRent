@@ -12,5 +12,9 @@ package videorent.acciones;
  * @version
  */
 public interface Accion {
+    /**
+     * Devuelve el identificador de la acción.
+     * @return el identificador de la acción.
+     */
     public char getId();
 }
