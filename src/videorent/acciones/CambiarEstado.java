@@ -11,7 +11,7 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class CambiarEstado {
+public class CambiarEstado extends AccionEmpleado {
     private String codCliente;
     private String estado;
 
@@ -23,6 +23,7 @@ public class CambiarEstado {
      * @param estado nuevo estado del cliente
      */
     public CambiarEstado(String codCliente, String estado) {
+        super('c');
         this.codCliente = codCliente;
         this.estado = estado;
     }

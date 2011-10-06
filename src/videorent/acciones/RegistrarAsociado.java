@@ -15,11 +15,10 @@ public class RegistrarAsociado extends AccionEmpleado {
      * Construye una nueva acción, del tipo Registrar asociado, de acuerdo a la
      * información suministrada.
      *
-     * @param id
      * @param codAsociado
      */
-    public RegistrarAsociado(String codAsociado, char id) {
-        super(id);
+    public RegistrarAsociado(String codAsociado) {
+        super('r');
         this.codAsociado = codAsociado;
     }
 

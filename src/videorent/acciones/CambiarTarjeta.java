@@ -17,11 +17,11 @@ public class CambiarTarjeta extends AccionEmpleado {
     /**
      * Construye una nueva acción del tipo CambiarTarjeta, que cambia los datos
      * de la tarjeta del cliente {@code codCliente}.
+     *
      * @param codCliente código del cliente a modificar
-     * @param id identificador de la acción.
      */
     public CambiarTarjeta(String codCliente, char id) {
-        super(id);
+        super('t');
         this.codCliente = codCliente;
     }
 
