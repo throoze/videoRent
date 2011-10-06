@@ -11,6 +11,6 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class AccionCliente {
+public abstract class AccionCliente extends Accion {
 
 }

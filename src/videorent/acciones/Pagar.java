@@ -12,5 +12,28 @@ package videorent.acciones;
  * @version
  */
 public class Pagar {
+    private String codCliente;
+    private double montoEntregado;
 
+    public Pagar(String codCliente, double montoEntregado, char id) {
+        super(id);
+        this.codCliente = codCliente;
+        this.montoEntregado = montoEntregado;
+    }
+
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(String codCliente) {
+        this.codCliente = codCliente;
+    }
+
+    public double getMontoEntregado() {
+        return montoEntregado;
+    }
+
+    public void setMontoEntregado(double montoEntregado) {
+        this.montoEntregado = montoEntregado;
+    }
 }

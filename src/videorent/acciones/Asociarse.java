@@ -4,6 +4,8 @@
  */
 package videorent.acciones;
 
+import cliente.Cliente;
+
 /**
  *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
@@ -11,6 +13,29 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class Asociarse {
+public class Asociarse extends Accion{
+    private Cliente cliente; 
+    private String tipoMembresia;
 
+    public Asociarse(Cliente cliente, String tipoMembresia) {
+        this.cliente = cliente;
+        this.tipoMembresia = tipoMembresia;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getTipoMembresia() {
+        return tipoMembresia;
+    }
+
+    public void setTipoMembresia(String tipoMembresia) {
+        this.tipoMembresia = tipoMembresia;
+    }
+    
 }
