@@ -66,17 +66,18 @@ public class VideoRent {
         }
     }
 
-    private Accion crearTransaccion(String linea) {
+    private Accion crearAccion(String linea) {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Accion t = null;
                
         if (tipoOp.equals("a")) {
             t = new Asociarse(tokens[1],tokens[2],
-                            tokens[3],tokens[4],tokens[5],tokens[6],tokens[7],tokens[8],
-                            tokens[9],tokens[10]);
+                            tokens[3],tokens[4],tokens[5],tokens[6],
+                            tokens[7],tokens[8],tokens[9],tokens[10]);
         } else if (tipoOp.equals("t")) {
-            t = new ActualizarTarjeta(tokens[1],tokens[2]);
+            t = new ActualizarTarjeta(tokens[1],tokens[2],tokens[3],
+                            tokens[4],tokens[5]);
         } else if (tipoOp.equals("c")) {
             t = new LlevarParaCompra(tokens[1],tokens[2]);
         } else if (tipoOp.equals("r")) {
@@ -89,8 +90,21 @@ public class VideoRent {
             t = new DevolverArticulo(tokens[1],tokens[2]);
         } else if(tipoOp.equals("e")){
             t = new PedirRecogerArticulo(tokens[1],tokens[2]);
+        } else if(tipoOp.equals("r")){
+            t = new 
+        } else if(tipoOp.equals("c")){
+            t = new
+        } else if(tipoOp.equals("t")){
+            t = new
+        } else if(tipoOp.equals("b")){
+            t = new
+        } else if(tipoOp.equals("l")){
+            t = new
+        } else if(tipoOp.equals("p")){
+            t = new
+        } else if(tipoOp.equals("i")){
+            t = new
         }
-      
         return t;
     }
 
@@ -98,7 +112,7 @@ public class VideoRent {
         String linea = "";
         try {
             while ((linea = in.readLine()) != null) {
-                Accion t = crearTransaccion(linea);
+                Accion t = crearAccion(linea);
 //                Status s = banco.ejecutarTransaccion(t);
                 //out.println(s.toString());
             }
