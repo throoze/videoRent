@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package videorent.acciones;
 
-import cliente.Cliente;
+import videorent.cliente.Cliente;
 
 /**
  *
