@@ -7,9 +7,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import videorent.acciones.AbandonarTienda;
@@ -88,8 +86,8 @@ public class VideoRent {
     private List<Asociado> asociados;
 
     // Procesamiento
-    private HashMap<Integer,Queue<Accion>> accClientes;
-    private HashMap<Integer,Queue<Accion>> accEmpleados;
+    private ArrayList<Accion> accClientes;
+    private ArrayList<Accion> accEmpleados;
     private List<Factura> facturas;
 
    public VideoRent(String entrada1, String entrada2, String entrada3,
@@ -200,8 +198,8 @@ public class VideoRent {
         this.asociados = new ArrayList<Asociado>();
 
         // Procesamiento
-        this.accClientes = new LinkedList<Accion>();
-        this.accEmpleados = new LinkedList<Accion>();
+        this.accClientes = new ArrayList<Accion>();
+        this.accEmpleados = new ArrayList<Accion>();
         this.facturas = new ArrayList<Factura>();
     }
 
@@ -216,7 +214,8 @@ public class VideoRent {
                             + "\n\nEncontrado:\n\t\n"
                             + "'" + linea + "'");
         } else {
-            Pattern pattern = Pattern.compile("^[BP]d{4}$");
+            Pattern pattern = Pattern.compile("^[BP]d{4}$");///////////////aca ojo, yo pienso ke es
+            ///////////////////////////////// ("[BP]d{4}$")////////////////
             Matcher matcher = pattern.matcher(tokens[0]);
             if (matcher.matches()) {
                 if (!(tokens[1].equals("activo") || tokens[1].equals("suspendido"))) {
@@ -399,6 +398,54 @@ public class VideoRent {
             System.err.println("Error: " + ioe);
         }
     }
+    
+    private void procesar() {
+        //si c=='a', alguien se kiere asociar. leo ac1 
+        for(int y=0;y<numDias;y++){
+            Accion ac1 = accClientes.get(y);   
+            char c = ac1.getId();
+            int aux = 0;
+            if (c=='a') {
+                Asociarse asociar = (Asociarse)ac1;                
+                Asociado aso =  new Asociado(String.valueOf(this.proxIdCliente),
+                    asociar.getTipoMembresia().toUpperCase().charAt(0), 
+                    asociar.getTipoMembresia(), asociar.getCedula(), 
+                    asociar.getNombre(), asociar.getApellido(), 
+                    asociar.getTelefono(), asociar.getDireccion());
+               this.asociados.add(aso);  
+               
+            } else if (c=='t') {
+                // Actualizo la tarjeta y busco a su dueño en asociados y los 
+                // asigno mutuamente
+                ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
+                                        
+                aux = this.asociados.indexOf(actualizar.getCodCliente()); 
+                String[] strFecha = actualizar.getVencimiento().split("/");
+                TarjetaCredito tarjeta = new TarjetaCredito(
+                        Long.parseLong(actualizar.getNumTarjeta()), actualizar.getBanco(),
+                        Integer.parseInt(actualizar.getCodSeguridad()), new Date(
+                                Integer.parseInt(strFecha[1]),
+                                Integer.parseInt(strFecha[0]),1),
+                        null);
+                this.asociados.get(aux).setTarjeta(tarjeta);
+                tarjeta.setDuenio(this.asociados.get(aux));
+                                
+            } else if (c=='c') {
+                t = new LlevarParaCompra(tokens[1],tokens[2]);
+            } else if (tipoOp.equals("r")) {
+                t = new LlevarParaAlquiler(tokens[1],tokens[2]);
+            } else if (tipoOp.equals("p")) {
+                t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
+            } else if(tipoOp.equals("b")){
+                t = new AbandonarTienda(tokens[1]);
+            } else if(tipoOp.equals("d")){
+                t = new DevolverArticulo(tokens[1],tokens[2]);
+            } else if(tipoOp.equals("e")){
+                t = new PedirRecogerArticulo(tokens[1],tokens[2]);
+            }
+            numAcClientes;
+        }
+    }
 
     /**
      *
@@ -430,4 +477,5 @@ public class VideoRent {
         videoRent.procesar();
         videoRent.escribir();
     }
+
 }
