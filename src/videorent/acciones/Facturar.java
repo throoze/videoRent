@@ -5,11 +5,13 @@
 package videorent.acciones;
 
 /**
+ * Representa la acción que realiza un empleado para  generar la facturación
+ * para determinado cliente.
  *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
- * @version
+ * @version 1.0 - 06.10.2011
  */
 public class Facturar extends AccionEmpleado {
     private String codCliente;
