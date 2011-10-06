@@ -1,4 +1,4 @@
-package articulo;
+package videorent.articulo;
 
 import java.util.ArrayList;
 

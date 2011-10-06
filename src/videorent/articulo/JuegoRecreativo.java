@@ -1,4 +1,4 @@
-package articulo;
+package videorent.articulo;
 
 /**
  * Representa los juegos de tipo recreativo de la tienda videoRent

@@ -1,4 +1,4 @@
-package articulo;
+package videorent.articulo;
 
 /**
  * Representa los articulos de tipo interactivos de la tienda videoRent
