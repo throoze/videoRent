@@ -1,9 +1,10 @@
 package videorent;
 
-import articulo.Articulo;
-import articulo.Pelicula;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import videorent.articulo.Articulo;
+import videorent.articulo.Pelicula;
 
 /**
  * Sistema de venta y alquiler de artículos audiovisuales e interactivos de la
