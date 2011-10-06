@@ -11,6 +11,7 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
+
 public interface Accion {
     /**
      * Devuelve el identificador de la acción.

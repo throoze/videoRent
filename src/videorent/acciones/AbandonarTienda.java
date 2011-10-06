@@ -11,6 +11,21 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class AbandonarTienda {
+public class AbandonarTienda extends AccionCliente{
+    private String codCliente;
 
+    public AbandonarTienda(String codCliente, char id) {
+        super(id);
+        this.codCliente = codCliente;
+    }
+
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(String codCliente) {
+        this.codCliente = codCliente;
+    }
+    
+    
 }
