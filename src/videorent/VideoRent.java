@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import videorent.acciones.AbandonarTienda;
 import videorent.acciones.Accion;
 import videorent.acciones.ActualizarTarjeta;
@@ -228,7 +230,22 @@ public class VideoRent {
         }
         return t;
     }
-
+    
+     private Articulo crearArticulo(String linea) throws IOException {
+        String[] tokens = linea.split(" & ");
+        String tipoOp = tokens[0];
+        Pattern p = Pattern.compile("[PSRE]d{4}");
+        Matcher m = p.matcher(tokens[0]);
+        Articulo a = null;
+        if (m.matches()){
+            //proceso
+        }
+        else 
+            throw new IOException("Error en el archivo de entrada de artículos");
+        
+        return a;
+    }
+    
     public void leer() {
         this.leerAsociados();
         this.leerArticulos();
@@ -249,8 +266,12 @@ public class VideoRent {
 
     private void leerArticulos() {
         String linea = "";
+        int contador = 0;
         try {
-            while ((linea = this.articulosIn.readLine()) != null) {
+            linea = this.articulosIn.readLine();
+            contador = Integer.parseInt(linea);
+            for(int u=0; u<contador; u++){
+                linea = this.articulosIn.readLine();
                 Articulo articulo = crearArticulo(linea);
                 this.stock.add(articulo);
             }
@@ -295,4 +316,5 @@ public class VideoRent {
         videoRent.procesar();
         videoRent.escribir();
     }
+
 }
