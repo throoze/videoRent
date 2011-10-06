@@ -11,6 +11,18 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class RegistrarAsociado {
+public class RegistrarAsociado implements  {
+    private String codAsociado;
 
+    public RegistrarAsociado(String codAsociado) {
+        this.codAsociado = codAsociado;
+    }
+
+    public String getCodAsociado() {
+        return codAsociado;
+    }
+
+    public void setCodAsociado(String codAsociado) {
+        this.codAsociado = codAsociado;
+    }
 }

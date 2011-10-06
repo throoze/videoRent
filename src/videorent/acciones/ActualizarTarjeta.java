@@ -4,6 +4,8 @@
  */
 package videorent.acciones;
 
+import fiscal.TarjetaCredito;
+
 /**
  *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
@@ -11,6 +13,22 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class ActualizarTarjeta {
+public class ActualizarTarjeta extends AccionCliente {
 
+    private String codCliente;
+    private TarjetaCredito tarjeta;
+
+    public ActualizarTarjeta(char id, String codCliente, TarjetaCredito tarjeta){
+        super(id);
+        this.codCliente = codCliente;
+        this.tarjeta = tarjeta;
+    };
+
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    public TarjetaCredito getTarjeta() {
+        return tarjeta;
+    }
 }
