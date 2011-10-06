@@ -28,7 +28,7 @@ import videorent.articulo.Pelicula;
  * @version 1.0 - 04.10.2011
  */
 public class VideoRent {
-    
+
     private BufferedReader in;
     private PrintStream out;
     //private Banco banco;
@@ -40,9 +40,9 @@ public class VideoRent {
     }
 
     public VideoRent(String fin, String fout) {
-       
+
         this();
-        
+
         BufferedReader in = null;
         PrintStream out = null;
 
@@ -63,32 +63,32 @@ public class VideoRent {
         String[] tokens = linea.split(" ");
         String tipoOp = tokens[0];
         Accion t = null;
-        
+
 //        if (tipoOp.equals("apt")) {
 //            t = new Apertura(Integer.parseInt(tokens[1]),
 //                             Integer.parseInt(tokens[2]),
 //                             Integer.parseInt(tokens[3]));
 //        } else if (tipoOp.equals("dep")) {
 //            t = new Deposito(Integer.parseInt(tokens[1]),
-//                             Integer.parseInt(tokens[2]));            
+//                             Integer.parseInt(tokens[2]));
 //        } else if (tipoOp.equals("ret")) {
 //            t = new Retiro(Integer.parseInt(tokens[1]),
-//                           Integer.parseInt(tokens[2]));   
+//                           Integer.parseInt(tokens[2]));
 //        } else if (tipoOp.equals("trn")) {
 //            t = new Transferencia(Integer.parseInt(tokens[1]),
 //                                  Integer.parseInt(tokens[2]),
 //                                  Integer.parseInt(tokens[3]));
 //        } else if (tipoOp.equals("edc")) {
 //            t = new EstadoDeCuenta(Integer.parseInt(tokens[1]),out);
-//            
+//
 //        }
         return t;
     }
-    
+
     private void procesar() {
         String linea = "";
         try {
-            while ((linea = in.readLine()) != null) {             
+            while ((linea = in.readLine()) != null) {
                 Accion t = crearTransaccion(linea);
 //                Status s = banco.ejecutarTransaccion(t);
                 //out.println(s.toString());

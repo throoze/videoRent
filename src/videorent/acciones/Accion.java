@@ -11,6 +11,7 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public abstract class Accion {
 
+public interface Accion {
+    public char getId();
 }

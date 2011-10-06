@@ -12,5 +12,13 @@ package videorent.acciones;
  * @version
  */
 public class CambiarEstado {
+    private String codCliente;
+    private String estado;
+
+    public CambiarEstado(String codCliente, String estado) {
+        this.codCliente = codCliente;
+        this.estado = estado;
+    }
+
 
 }

@@ -11,6 +11,28 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class AccionEmpleado {
+public class AccionEmpleado implements Accion {
+    /**
+     * Identifica la acción leída. Usamos un caracter, para evitar el uso del
+     * operador {@code instanceof}, debido a que tiene alto impacto en el
+     * desempeño de la aplicación.
+     */
+    public char id;
 
+    /**
+     * Construye una AccionCliente vacía.
+     * @param id Identificador de la acción.
+     */
+    public AccionEmpleado(char id){
+        this.id = id;
+    }
+
+    /**
+     * Devuelve el identificador de la acción.
+     * @return el identificador de la acción.
+     */
+    @Override
+    public char getId(){
+        return this.id;
+    }
 }

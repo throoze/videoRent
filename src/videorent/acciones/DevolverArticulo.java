@@ -11,6 +11,31 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class DevolverArticulo {
+public class DevolverArticulo extends AccionCliente{
+    private String codCliente;
+    private String codArticulo;
 
+    public DevolverArticulo(String codCliente, String codArticulo, char id) {
+        super(id);
+        this.codCliente = codCliente;
+        this.codArticulo = codArticulo;
+    }
+
+    public String getCodArticulo() {
+        return codArticulo;
+    }
+
+    public void setCodArticulo(String codArticulo) {
+        this.codArticulo = codArticulo;
+    }
+
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(String codCliente) {
+        this.codCliente = codCliente;
+    }
+    
+    
 }
