@@ -1,6 +1,6 @@
 package videorent.acciones;
 
-import videorent.fiscal.TarjetaCredito;
+import java.util.Date;
 
 /**
  * Representa la acción que realiza un cliente para actualizar los datos de su
@@ -14,40 +14,68 @@ import videorent.fiscal.TarjetaCredito;
 public class ActualizarTarjeta extends AccionCliente {
 
     private String codCliente;
-    private TarjetaCredito tarjeta;
+    private long numTarjeta;
+    private String banco;
+    private int codSeguridad;
+    private String vencimiento;
 
     /**
      * Construye una nueva acción de tipo ActualizarTarjeta, bajo la información
      * suministrada.
      *
-     * @param codCliente código del cliente cuya tarjeta será actualizada.
-     * @param tarjeta {@code TarjetaCredito} con los datos actualizados.
+     * @param codCliente código del cliente dueño de la tarjeta.
+     * @param numTarjeta número de la tarjeta
+     * @param banco banco de la tarjeta
+     * @param codSeguridad código de seguridad de la tarjeta.
+     * @param vencimiento fecha de vencimiento de la tarjeta.
      */
-    public ActualizarTarjeta(String codCliente, TarjetaCredito tarjeta){
+    public ActualizarTarjeta(String codCliente, long numTarjeta, String banco,
+            int codSeguridad, String vencimiento) {
         super('t');
         this.codCliente = codCliente;
-        this.tarjeta = tarjeta;
-    };
+        this.numTarjeta = numTarjeta;
+        this.banco = banco;
+        this.codSeguridad = codSeguridad;
+        this.vencimiento = vencimiento;
+    }
 
     /**
-     * Getter del atributo codCliente
+     * Devuelve el código del cliente
      * @return El código del cliente
->>>>>>> b0389e67a69e08c37c3acd79a671ac6ff56cda68
      */
     public String getCodCliente() {
         return codCliente;
     }
 
     /**
-     * Devuelve una tarjeta de crédito con los datos actualizados.
-     * @return tarjeta de crédito con los datos actualizados.
-=======
-    /**
-     * Getter del atributo tarjeta
-     * @return La tarjeta de crédito asociada
->>>>>>> b0389e67a69e08c37c3acd79a671ac6ff56cda68
+     * Devuelve el banco de la tarjeta
+     * @return el banco de la tarjeta
      */
-    public TarjetaCredito getTarjeta() {
-        return tarjeta;
+    public String getBanco() {
+        return banco;
+    }
+
+    /**
+     * Devuelve el código de seguridad de la tarjeta
+     * @return el código de seguridad de la tarjeta
+     */
+    public int getCodSeguridad() {
+        return codSeguridad;
+    }
+
+    /**
+     * Devuelve el número de la tarjeta
+     * @return el número de la tarjeta
+     */
+    public long getNumTarjeta() {
+        return numTarjeta;
+    }
+
+    /**
+     * Devuelve la fecha de vencimiento de la tarjeta.
+     * @return la fecha de vencimiento de la tarjeta.
+     */
+    public String getVencimiento() {
+        return vencimiento;
     }
 }

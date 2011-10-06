@@ -9,12 +9,13 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version 1.0 - 06.10.2011
  */
-public class InformarError {
+public class InformarError extends AccionEmpleado {
     private String codCliente;
     private int codError;
 
     /**
      * Construye una nueva acción del tipo InformarError.
+     *
      * @param codCliente código del cliente a quien se le va a informar del
      * error.
      * @param codError código del error. Puede ser: 0 => 'Cliente no
@@ -24,12 +25,14 @@ public class InformarError {
      * 7 => 'cualquier otra operación no válida'.
      */
     public InformarError(String codCliente, int codError) {
+        super('i');
         this.codCliente = codCliente;
         this.codError = codError;
     }
 
     /**
      * Devuelve el código del cliente a quien se le informa del error.
+     *
      * @return código del cliente a quien se le informa del error.
      */
     public String getCodCliente() {
@@ -38,6 +41,7 @@ public class InformarError {
 
     /**
      * Devuelve el código de error del cual se desea informar.
+     *
      * @return código de error del cual se desea informar. Puede ser: 0 =>
      * 'Cliente no registrado', 1 => 'artículo no está en existencia', 2 =>
      * 'acción no permitida para este tipo de cliente', 3 => 'pago incompleto',

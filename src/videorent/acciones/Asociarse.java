@@ -3,14 +3,15 @@ package videorent.acciones;
 import videorent.cliente.Cliente;
 
 /**
+ * Representa la acción que hace un cliente de asociarse a al tienda VideoRent.
  *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
- * @version
+ * @version 1.0 - 10.06.2011
  */
 public class Asociarse extends AccionCliente{
-    private Cliente cliente; 
+    private Cliente cliente;
     private String tipoMembresia;
 
     public Asociarse(Cliente cliente, String tipoMembresia) {
@@ -34,5 +35,5 @@ public class Asociarse extends AccionCliente{
     public void setTipoMembresia(String tipoMembresia) {
         this.tipoMembresia = tipoMembresia;
     }
-    
+
 }
