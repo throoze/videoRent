@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -67,8 +68,8 @@ public class VideoRent {
     private Date inicio;
 
     // Almacenamiento
-    private List<Articulo> stock;
-    private List<Articulo> prestamo;
+    private HashMap<Articulo,Integer> stock;
+    private HashMap<Articulo,Integer> prestamo;
     private List<Asociado> asociados;
 
     // Procesamiento
@@ -168,8 +169,8 @@ public class VideoRent {
 
     private void init(){
         // Almacenamiento
-        this.stock = new ArrayList<Articulo>();
-        this.prestamo = new ArrayList<Articulo>();
+        this.stock = new HashMap<Articulo,Integer>();
+        this.prestamo = new HashMap<Articulo,Integer>();
         this.asociados = new ArrayList<Asociado>();
 
         // Procesamiento
@@ -178,7 +179,10 @@ public class VideoRent {
         this.facturas = new ArrayList<Factura>();
     }
 
-
+    private Asociado crearAsociado(String linea) {
+        String[] tokens = linea.split(" & ");
+        return null;
+    }
 
     private Accion crearAccionCliente(String linea) {
         String[] tokens = linea.split(" & ");
@@ -206,6 +210,7 @@ public class VideoRent {
             t = new PedirRecogerArticulo(tokens[1],tokens[2]);
         } return t;
     }
+
     private Accion crearAccionEmpleado(String linea) {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
@@ -276,7 +281,7 @@ public class VideoRent {
      * @param args argumentos de entrada de la linea de comandos.
      */
     public static void main(String[] args) {
-        VideoRent videoRent;
+        VideoRent videoRent = null;
         if (args.length == 3) {
             videoRent = new VideoRent(args[0], args[1], args[2]);
         } else if (args.length == 8) {
