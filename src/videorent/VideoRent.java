@@ -33,6 +33,7 @@ import videorent.articulo.JuegoRecreativo;
 import videorent.articulo.Pelicula;
 import videorent.articulo.TemporadaSerie;
 import videorent.cliente.Asociado;
+import videorent.cliente.Cliente;
 import videorent.fiscal.Factura;
 import videorent.fiscal.TarjetaCredito;
 
@@ -84,6 +85,7 @@ public class VideoRent {
     private HashMap<Articulo,Integer> stock;
     private HashMap<Articulo,Integer> prestamo;
     private List<Asociado> asociados;
+    private HashMap<Cliente,ArrayList<Articulo>> carritos;
 
     // Procesamiento
     private ArrayList<Accion> accClientes;
@@ -196,6 +198,7 @@ public class VideoRent {
         this.stock = new HashMap<Articulo,Integer>();
         this.prestamo = new HashMap<Articulo,Integer>();
         this.asociados = new ArrayList<Asociado>();
+        this.carritos = new HashMap<Cliente, ArrayList<Articulo>>();
 
         // Procesamiento
         this.accClientes = new ArrayList<Accion>();
@@ -442,28 +445,28 @@ public class VideoRent {
             System.err.println("Error: " + ioe);
         }
     }
-    
+
     private void procesar() {
-        //si c=='a', alguien se kiere asociar. leo ac1 
+        //si c=='a', alguien se kiere asociar. leo ac1
         for(int y=0;y<numDias;y++){
-            Accion ac1 = accClientes.get(y);   
+            Accion ac1 = accClientes.get(y);
             char c = ac1.getId();
             int aux = 0;
             if (c=='a') {
-                Asociarse asociar = (Asociarse)ac1;                
+                Asociarse asociar = (Asociarse)ac1;
                 Asociado aso =  new Asociado(String.valueOf(this.proxIdCliente),
-                    asociar.getTipoMembresia().toUpperCase().charAt(0), 
-                    asociar.getTipoMembresia(), asociar.getCedula(), 
-                    asociar.getNombre(), asociar.getApellido(), 
+                    asociar.getTipoMembresia().toUpperCase().charAt(0),
+                    asociar.getTipoMembresia(), asociar.getCedula(),
+                    asociar.getNombre(), asociar.getApellido(),
                     asociar.getTelefono(), asociar.getDireccion());
-               this.asociados.add(aso);  
-               
+               this.asociados.add(aso);
+
             } else if (c=='t') {
-                // Actualizo la tarjeta y busco a su dueño en asociados y los 
+                // Actualizo la tarjeta y busco a su dueño en asociados y los
                 // asigno mutuamente
                 ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
-                                        
-                aux = this.asociados.indexOf(actualizar.getCodCliente()); 
+
+                aux = this.asociados.indexOf(actualizar.getCodCliente());
                 String[] strFecha = actualizar.getVencimiento().split("/");
                 TarjetaCredito tarjeta = new TarjetaCredito(
                         Long.parseLong(actualizar.getNumTarjeta()), actualizar.getBanco(),
@@ -473,7 +476,7 @@ public class VideoRent {
                         null);
                 this.asociados.get(aux).setTarjeta(tarjeta);
                 tarjeta.setDuenio(this.asociados.get(aux));
-                                
+
             } else if (c=='c') {
                 t = new LlevarParaCompra(tokens[1],tokens[2]);
             } else if (tipoOp.equals("r")) {
