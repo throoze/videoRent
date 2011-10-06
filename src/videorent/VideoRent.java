@@ -1,13 +1,10 @@
 package videorent;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,11 +16,19 @@ import videorent.acciones.AbandonarTienda;
 import videorent.acciones.Accion;
 import videorent.acciones.ActualizarTarjeta;
 import videorent.acciones.Asociarse;
+import videorent.acciones.BuscarArticulo;
+import videorent.acciones.CambiarEstado;
+import videorent.acciones.CambiarTarjeta;
+import videorent.acciones.CobrarPerdido;
 import videorent.acciones.DevolverArticulo;
+import videorent.acciones.Facturar;
+import videorent.acciones.InformarError;
 import videorent.acciones.LlevarParaAlquiler;
 import videorent.acciones.LlevarParaCompra;
 import videorent.acciones.Pagar;
 import videorent.acciones.PedirRecogerArticulo;
+import videorent.acciones.RecordarDevolucion;
+import videorent.acciones.RegistrarAsociado;
 import videorent.articulo.Articulo;
 import videorent.articulo.JuegoEducativo;
 import videorent.articulo.JuegoRecreativo;
@@ -215,7 +220,7 @@ public class VideoRent {
             Matcher matcher = pattern.matcher(tokens[0]);
             if (matcher.matches()) {
                 if (!(tokens[1].equals("activo") || tokens[1].equals("suspendido"))) {
-                    throws new IOException("VideoRent: Mal formato en el "
+                    throw new IOException("VideoRent: Mal formato en el "
                             + "archivo de entrada <"+this.strEntrada1+">:"
                             + "linea " + numLinea + ".\n"
                             + "Se esperaba estado 'activo' o 'suspendido'."
@@ -244,7 +249,6 @@ public class VideoRent {
                         tokens[0]);
             }
         }
-        return null;
     }
 
     private Accion crearAccionCliente(String linea) {
@@ -280,24 +284,26 @@ public class VideoRent {
         Accion t = null;
 
         if(tipoOp.equals("r")){
-            t = new
+            t = new RegistrarAsociado(tokens[1]);
         } else if(tipoOp.equals("c")){
-            t = new
+            t = new CambiarEstado(tokens[1], tokens[2]);
         } else if(tipoOp.equals("t")){
-            t = new
+            t = new CambiarTarjeta(tokens[1]);
+        } else if(tipoOp.equals("f")){
+            t = new Facturar(tokens[1], Double.parseDouble(tokens[2]));
         } else if(tipoOp.equals("b")){
-            t = new
+            t = new BuscarArticulo(tokens[1], tokens[2]);
         } else if(tipoOp.equals("l")){
-            t = new
+            t = new RecordarDevolucion(tokens[1]);
         } else if(tipoOp.equals("p")){
-            t = new
+            t = new CobrarPerdido(tokens[1], tokens[2]);
         } else if(tipoOp.equals("i")){
-            t = new
+            t = new InformarError(tokens[1], Integer.parseInt(tokens[2]));
         }
         return t;
     }
 
-     private Articulo crearArticulo(String linea) throws IOException {
+    private Articulo crearArticulo(String linea) throws IOException {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Pattern p = Pattern.compile("[PSRE]d{4}");
@@ -315,8 +321,7 @@ public class VideoRent {
             } else if(temp=='E'){
                 a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]), tokens[4], tokens[3]);
             }
-
-            this.stock.put(a, tokens[1]);
+            this.stock.put(a, Integer.parseInt(tokens[1]));
         }
         else
             throw new IOException("Error en el archivo de entrada de artículos");
@@ -324,7 +329,7 @@ public class VideoRent {
         return a;
     }
 
-    public void leer() {
+    public void leer() throws IOException {
         this.leerAsociados();
         this.leerArticulos();
         this.leerAcciones();
@@ -388,7 +393,7 @@ public class VideoRent {
      * Método Main.
      * @param args argumentos de entrada de la linea de comandos.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         VideoRent videoRent = null;
         if (args.length == 3) {
             videoRent = new VideoRent(args[0], args[1], args[2]);
@@ -403,10 +408,8 @@ public class VideoRent {
                    "<asociadosDespues> <articulosPrestamo>");
            System.exit(-1);
         }
-
         videoRent.leer();
         videoRent.procesar();
         videoRent.escribir();
     }
-
 }
