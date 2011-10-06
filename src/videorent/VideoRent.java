@@ -563,15 +563,15 @@ public class VideoRent {
                 t = new AbandonarTienda(tokens[1]);
                 //limpiar carrito con ese cliente
             } else if(c=='d'){
-                t = new DevolverArticulo(tokens[1],tokens[2]);
-
-            } else if(tipoOp.equals("e")){
+                this.procesarDevolverArticulo((DevolverArticulo)ac1);
+                
+            } else if(c=='e'){
                 t = new PedirRecogerArticulo(tokens[1],tokens[2]);
             }
             numAcClientes;
         }
     }
-
+    
     /**
      *
      */
@@ -631,5 +631,6 @@ public class VideoRent {
         videoRent.procesar();
         videoRent.escribir();
     }
+
 
 }
