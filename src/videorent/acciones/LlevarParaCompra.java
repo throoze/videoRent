@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package videorent;
+package videorent.acciones;
 
 /**
  *
@@ -11,6 +11,6 @@ package videorent;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class Accion {
+public class LlevarParaCompra {
 
 }
