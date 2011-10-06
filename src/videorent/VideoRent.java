@@ -1,9 +1,9 @@
 package videorent;
 
+import articulo.Articulo;
+import articulo.Pelicula;
 import java.util.ArrayList;
 import java.util.Arrays;
-import videorent.articulo.Articulo;
-import videorent.articulo.Pelicula;
 
 /**
  * Sistema de venta y alquiler de artículos audiovisuales e interactivos de la
@@ -35,7 +35,7 @@ public class VideoRent {
 
         ArrayList<String> actores2 = new ArrayList<String>(arrayString2.length);
         actores2.addAll(Arrays.asList(arrayString2));
-        
+
         String nombre = "thor";
         int anio = 2011;
         String formato = "HD";
