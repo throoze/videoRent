@@ -30,8 +30,9 @@ public class ActualizarTarjeta extends AccionCliente {
     };
 
     /**
-     * Devuelve el código del cliente cuyos datos se desean actualizar.
-     * @return código del cliente cuyos datos se desean actualizar.
+     * Getter del atributo codCliente
+     * @return El código del cliente
+>>>>>>> b0389e67a69e08c37c3acd79a671ac6ff56cda68
      */
     public String getCodCliente() {
         return codCliente;
@@ -40,6 +41,11 @@ public class ActualizarTarjeta extends AccionCliente {
     /**
      * Devuelve una tarjeta de crédito con los datos actualizados.
      * @return tarjeta de crédito con los datos actualizados.
+=======
+    /**
+     * Getter del atributo tarjeta
+     * @return La tarjeta de crédito asociada
+>>>>>>> b0389e67a69e08c37c3acd79a671ac6ff56cda68
      */
     public TarjetaCredito getTarjeta() {
         return tarjeta;
