@@ -91,9 +91,10 @@ public class VideoRent {
     private HashMap<String,ArrayList<String>> carritoAlquiler;
 
     // Procesamiento
-    private ArrayList<Accion> accClientes;
-    private ArrayList<Accion> accEmpleados;
+    private ArrayList<ArrayList<Accion>> accClientes;
+    private ArrayList<ArrayList<Accion>> accEmpleados;
     private List<Factura> facturas;
+    private int diaActual;
 
    public VideoRent(String entrada1, String entrada2, String entrada3,
            String salida1, String salida2, String salida3,
@@ -206,8 +207,8 @@ public class VideoRent {
         this.carritoAlquiler = new HashMap<String, ArrayList<String>>();
 
         // Procesamiento
-        this.accClientes = new ArrayList<Accion>();
-        this.accEmpleados = new ArrayList<Accion>();
+        this.accClientes = new ArrayList<ArrayList<Accion>>();
+        this.accEmpleados = new ArrayList<ArrayList<Accion>>();
         this.facturas = new ArrayList<Factura>();
     }
 
@@ -415,9 +416,19 @@ public class VideoRent {
                                             Integer.parseInt(tokens[1]),
                                             Integer.parseInt(tokens[0]));
                                 linea = this.accionesIn.readLine();
+                                int j = 0;
                                 for (int i = 0; i < this.numDias; i++){
-                                    linea = this.accionesIn.readLine();
-                                    this.crearAccionCliente(linea);
+                                    while ((linea = this.accionesIn.readLine())
+                                            != "#" && j < this.numAcClientes) {
+                                        Accion accion = this.crearAccionCliente(
+                                            linea);
+                                        if (this.accClientes.get(i) == null) {
+                                            this.accClientes.add(i,
+                                                    new ArrayList<Accion>());
+                                        }
+                                        this.accClientes.get(i).add(accion);
+                                        j++;
+                                    }
                                 }
                             } else {
                                 throw new IOException("VideoRent: Error al"
@@ -446,11 +457,6 @@ public class VideoRent {
                 throw new IOException("VideoRent: Error al leer el "
                             + "archivo de entrada <"+this.strEntrada3+">:"
                             + "linea 1.");
-            }
-
-            while ((linea = this.accionesIn.readLine()) != null) {
-                Accion accion = crearAccionCliente(linea);
-                this.accClientes.add(accion);
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
@@ -535,10 +541,7 @@ public class VideoRent {
     }
 
     private void procesarPagar(Pagar accion) {
-        Cliente
-        if () {
-
-        }
+        
         //sacar del carrito y hacer factura asociada
         t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
     }
@@ -546,29 +549,32 @@ public class VideoRent {
     private void procesar() throws Exception {
         //si c=='a', alguien se kiere asociar. leo ac1
         for(int y=0;y<this.numDias;y++){
-            Accion ac1 = this.accClientes.get(y);
-            char c = ac1.getId();
-            int aux = 0;
-            if (c=='a') {
-                procesarAsociarse((Asociarse) ac1);
-            } else if (c=='t') {
-                procesarActualizarTarjeta((ActualizarTarjeta) ac1, aux);
-            } else if (c=='c') {
-                this.procesarLlevarParaCompra((LlevarParaCompra) ac1);
-            } else if (c=='r') {
-                this.procesarLlevarParaAlquiler((LlevarParaAlquiler) ac1);
-            } else if (c=='p') {
-                this.procesarPagar((Pagar) ac1);
-            } else if(c=='b'){
-                t = new AbandonarTienda(tokens[1]);
-                //limpiar carrito con ese cliente
-            } else if(c=='d'){
-                this.procesarDevolverArticulo((DevolverArticulo)ac1);
-                
-            } else if(c=='e'){
-                t = new PedirRecogerArticulo(tokens[1],tokens[2]);
+
+            Iterator iter = this.accClientes.get(y).iterator();
+            while(iter.hasNext()) {
+                Accion ac1 = (Accion) iter.next();
+                char c = ac1.getId();
+                int aux = 0;
+                if (c == 'a') {
+                    procesarAsociarse((Asociarse) ac1);
+                } else if (c == 't') {
+                    procesarActualizarTarjeta((ActualizarTarjeta) ac1, aux);
+                } else if (c == 'c') {
+                    this.procesarLlevarParaCompra((LlevarParaCompra) ac1);
+                } else if (c == 'r') {
+                    this.procesarLlevarParaAlquiler((LlevarParaAlquiler) ac1);
+                } else if (c == 'p') {
+                    this.procesarPagar((Pagar) ac1);
+                } else if (c == 'b') {
+                    t = new AbandonarTienda(tokens[1]);
+                    //limpiar carrito con ese cliente
+                } else if (c == 'd') {
+                    t = new DevolverArticulo(tokens[1], tokens[2]);
+
+                } else if (tipoOp.equals("e")) {
+                    t = new PedirRecogerArticulo(tokens[1], tokens[2]);
+                }
             }
-            numAcClientes;
         }
     }
     
@@ -590,7 +596,8 @@ public class VideoRent {
         return null;
     }
 
-    private void retirarDeStock(String codigo, String codCliente, String cedula)
+    private void retirarDeStock(String codigo, String codCliente,
+            String cedula)
     {
         String id = (codCliente != null ? codCliente : cedula);
         Set<Articulo> articulos = this.stock.keySet();
@@ -606,6 +613,12 @@ public class VideoRent {
                 break;
             }
         }
+    }
+
+    private void generarInformarDeError(int codError, String idCliente)
+    {
+        this.accEmpleados.get(this.diaActual).add(
+                new InformarError(idCliente, codError));
     }
 
     /**
