@@ -20,20 +20,14 @@ public class VideoRent {
     public static void main(String[] args) {
         String genero = "fan";
         String[] arrayString = new String[]{"1", "2", "3", "4"};
-        for (int i = 0; i < arrayString.length; i++) {
-            System.out.println(arrayString[i]);
-        }
- 
+        
         ArrayList<String> actores = new ArrayList<String>(arrayString.length);
         for (int i = 0; i < arrayString.length; i++) {
             actores.add(arrayString[i]);
         }
         
         String[] arrayString2 = new String[]{"1", "2", "3", "5"};
-        for (int i = 0; i < arrayString.length; i++) {
-            System.out.println(arrayString[i]);
-        }
- 
+         
         ArrayList<String> actores2 = new ArrayList<String>(arrayString2.length);
         for (int i = 0; i < arrayString2.length; i++) {
             actores2.add(arrayString2[i]);
@@ -54,6 +48,9 @@ public class VideoRent {
         }
         if(art1.equals(art2)){
         System.out.println("2");
+        }
+        if(art2.equals(art1)){
+        System.out.println("4");
         }
         if(art2.equals(art3)){
         System.out.println("3");
