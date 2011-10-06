@@ -88,8 +88,8 @@ public class VideoRent {
     private List<Asociado> asociados;
 
     // Procesamiento
-    private Queue<Accion> accClientes;
-    private Queue<Accion> accEmpleados;
+    private HashMap<Integer,Queue<Accion>> accClientes;
+    private HashMap<Integer,Queue<Accion>> accEmpleados;
     private List<Factura> facturas;
 
    public VideoRent(String entrada1, String entrada2, String entrada3,
@@ -379,7 +379,18 @@ public class VideoRent {
 
     private void leerAcciones() {
         String linea = "";
+        int n;
+
         try {
+            linea = this.accionesIn.readLine();
+            if (linea != null) {
+                throw new IOException("VideoRent: Mal formato en el "
+                            + "archivo de entrada <"+this.strEntrada3+">:"
+                            + "linea 1. "
+                            + "Se esperaban dos elementos.\n\nEncontrado:\n\t"
+                            + "'" + linea + "'");
+            }
+
             while ((linea = this.accionesIn.readLine()) != null) {
                 Accion accion = crearAccionCliente(linea);
                 this.accClientes.add(accion);
@@ -387,6 +398,13 @@ public class VideoRent {
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
         }
+    }
+
+    /**
+     *
+     */
+    private void escribir() {
+
     }
 
     /**
