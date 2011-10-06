@@ -11,10 +11,15 @@ package videorent.acciones;
  */
 public class LlevarParaCompra extends AccionCliente{
     private String codCliente;
+    private String cedula;
+    private String nombre;
+    private String telefono;
     private String codArticulo;
 
     /**
-     * Construye una nueva acción del tipo LlevarParaCompra.
+     * Construye una nueva acción del tipo LlevarParaCompra relacionado con un
+     * cliente Asociado a la tienda.
+     *
      * @param codCliente cliente que realiza la compra.
      * @param codArticulo artículo que se compra.
      */
@@ -22,6 +27,28 @@ public class LlevarParaCompra extends AccionCliente{
         super('c');
         this.codCliente = codCliente;
         this.codArticulo = codArticulo;
+        this.cedula = null;
+        this.nombre = null;
+        this.telefono = null;
+    }
+
+    /**
+     * Construye una nueva acción del tipo LlevarParaCompra relacionado con un
+     * cliente no Asociado a la tienda.
+     *
+     * @param cedula
+     * @param nombre
+     * @param telefono
+     * @param codArticulo
+     */
+    public LlevarParaCompra(String cedula, String nombre, String telefono,
+            String codArticulo) {
+        super('c');
+        this.codCliente = null;
+        this.codArticulo = codArticulo;
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.telefono = telefono;
     }
 
     /**
@@ -38,5 +65,32 @@ public class LlevarParaCompra extends AccionCliente{
      */
     public String getCodCliente() {
         return codCliente;
+    }
+
+    /**
+     * Devuelve la cédula del cliente.
+     *
+     * @return la cédula del cliente.
+     */
+    public String getCedula() {
+        return cedula;
+    }
+
+    /**
+     * Devuelve el nombre del cliente.
+     *
+     * @return el nombre del cliente.
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Devuelve el teléfono del cliente.
+     *
+     * @return el teléfono del cliente.
+     */
+    public String getTelefono() {
+        return telefono;
     }
 }
