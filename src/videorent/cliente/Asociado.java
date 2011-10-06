@@ -21,24 +21,26 @@ public class Asociado extends Cliente {
      * membresía del {@code Asociado} y puede ser : 'B' => Membresía Básica, o
      * 'P' => Membresía Premium.
      */
-    protected String codigo;
+    private String codigo;
+
+    private String apellido;
 
     /**
      * Membresía del Asociado. Puede ser : 'B' => Membresía Básica, o
      * 'P' => Membresía Premium.
      */
-    protected char membresia;
+    private char membresia;
 
     /**
      * Estado del {@code Asociado}. Puede ser: 'A' => Activo, o 'S' =>
      * Suspendido
      */
-    protected char estado;
+    private  char estado;
 
     /**
      *
      */
-    protected String direccion;
+    private String direccion;
 
     private TarjetaCredito tarjeta;
 
@@ -51,6 +53,22 @@ public class Asociado extends Cliente {
      * Lista de alquileres vencidos.
      */
     private ArrayList<Alquiler> alquileresVencidos;
+
+    /**
+     * Devuelve el apellido del @code{Cliente}
+     * @return apellido del @code{Cliente}
+     */
+    public String getApellido() {
+        return apellido;
+    }
+
+    /**
+     * Establece un valor para el apellido del @code{Cliente}
+     * @param apellido
+     */
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
     /**
      * Construye un nuevo {@code Asociado}, con la información suministrada. Los

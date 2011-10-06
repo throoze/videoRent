@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,7 +86,8 @@ public class VideoRent {
     private HashMap<Articulo,Integer> stock;
     private HashMap<Articulo,Integer> prestamo;
     private List<Asociado> asociados;
-    private HashMap<Cliente,ArrayList<Articulo>> carritos;
+    private HashMap<Cliente,ArrayList<String>> carritoVenta;
+    private HashMap<String,ArrayList<String>> carritoAlquiler;
 
     // Procesamiento
     private ArrayList<Accion> accClientes;
@@ -193,12 +195,23 @@ public class VideoRent {
         this.init();
     }
 
+    private Asociado asociadoPorCodigo(String codigo) {
+        Iterator iter = this.asociados.iterator();
+        while(iter.hasNext()){
+            Asociado aux = (Asociado) iter.next();
+            if (aux.getCodigo().equals(codigo)) {
+                return aux;
+            }
+        }
+        return null;
+    }
+
     private void init(){
         // Almacenamiento
         this.stock = new HashMap<Articulo,Integer>();
         this.prestamo = new HashMap<Articulo,Integer>();
         this.asociados = new ArrayList<Asociado>();
-        this.carritos = new HashMap<Cliente, ArrayList<Articulo>>();
+        this.carritoVenta = new HashMap<Cliente, ArrayList<String>>();
 
         // Procesamiento
         this.accClientes = new ArrayList<Accion>();
@@ -465,7 +478,7 @@ public class VideoRent {
                 // Actualizo la tarjeta y busco a su dueño en asociados y los
                 // asigno mutuamente
                 ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
-                
+
                 for(int j=0;j<this.asociados.size();j++){
                     Asociado asoci = this.asociados.get(j);
                     if(asoci.getCodigo().equals(actualizar.getCodCliente())){
@@ -486,7 +499,31 @@ public class VideoRent {
                 tarjeta.setDuenio(this.asociados.get(aux));
 
             } else if (c=='c') {
-                t = new LlevarParaCompra(tokens[1],tokens[2]);
+                LlevarParaCompra accion = ((LlevarParaCompra) ac1);
+                ArrayList<String> lista;
+                if (accion.getCodCliente() == null) {
+                    Cliente cliente = new Cliente(accion.getCedula(),
+                                                  accion.getNombre(),
+                                                  accion.getTelefono());
+                    lista = this.carritoVenta.get(cliente);
+                    if (lista == null) {
+                        this.carritoVenta.put(cliente, new ArrayList<String>());
+                        lista = this.carritoVenta.get(cliente);
+                    }
+                    lista.add(accion.getCodArticulo());
+                    this.carritoVenta.put(cliente, lista);
+                } else {
+                    Asociado cliente = this.asociadoPorCodigo(
+                            accion.getCodCliente());
+                    lista = this.carritoVenta.get(cliente);
+                    if (lista == null) {
+                        this.carritoVenta.put(cliente, new ArrayList<String>());
+                        lista = this.carritoVenta.get(cliente);
+                    }
+                    lista.add(accion.getCodArticulo());
+                    this.carritoVenta.put(cliente, lista);
+                }
+                
             } else if (c=='r') {
                 t = new LlevarParaAlquiler(tokens[1],tokens[2]);
             } else if (c=='p') {

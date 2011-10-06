@@ -11,7 +11,6 @@ package videorent.cliente;
 public class Cliente {
     protected String cedula;
     protected String nombre;
-    protected String apellido;
     protected String telefono;
 
     /**
@@ -21,27 +20,9 @@ public class Cliente {
      * @param apellido
      * @param telefono
      */
-    public Cliente(String cedula, String nombre, String apellido, String telefono) {
+    public Cliente(String cedula, String nombre, String telefono) {
         this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
         this.telefono = telefono;
-    }
-
-    /**
-     * Devuelve el apellido del @code{Cliente}
-     * @return apellido del @code{Cliente}
-     */
-    public String getApellido() {
-        return apellido;
-    }
-
-    /**
-     * Establece un valor para el apellido del @code{Cliente}
-     * @param apellido
-     */
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     /**
