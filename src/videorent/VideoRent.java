@@ -8,6 +8,10 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import videorent.acciones.AbandonarTienda;
 import videorent.acciones.Accion;
 import videorent.acciones.ActualizarTarjeta;
@@ -19,6 +23,8 @@ import videorent.acciones.Pagar;
 import videorent.acciones.PedirRecogerArticulo;
 import videorent.articulo.Articulo;
 import videorent.articulo.Pelicula;
+import videorent.cliente.Asociado;
+import videorent.fiscal.Factura;
 
 /**
  * Sistema de venta y alquiler de artículos audiovisuales e interactivos de la
@@ -36,49 +42,149 @@ import videorent.articulo.Pelicula;
  */
 public class VideoRent {
 
-    private BufferedReader in1;
-    private BufferedReader in2;
-    private BufferedReader in3;
-    private BufferedReader in4;
-    private PrintStream out1;
-    private PrintStream out2;
-    //private Banco banco;
+    // Entrada / Salida
+    //        Entrada
+    private BufferedReader asociadosIn;
+    private BufferedReader articulosIn;
+    private BufferedReader accionesIn;
+    //        Salida
+    private PrintStream accionesOut;
+    private PrintStream facturasOut;
+    private PrintStream stockOut;
+    private PrintStream asociadosOut;
+    private PrintStream prestamoOut;
+    //    Nombres por defecto
+    private String defSalida1 = "AccionesEmpleadosDespues";
+    private String defSalida2 = "Facturas";
+    private String defSalida3 = "ArticulosExistenciaDespues";
+    private String defSalida4 = "ClientesAsociadosDespues";
+    private String defSalida5 = "ArticulosPrestamo";
 
-   public VideoRent(String fin1,String fin2, String fin3, String fin4, String fout1, String fout2) {
+    // Parámetros de lectura
+    private int numDias;
+    private int numAcClientes;
+    private int numArticulos;
+    private Date inicio;
 
-        BufferedReader in1 = null;
-        BufferedReader in2 = null;
-        BufferedReader in3 = null;
-        BufferedReader in4 = null;
-        PrintStream out1 = null;
-        PrintStream out2 = null;
+    // Almacenamiento
+    private List<Articulo> stock;
+    private List<Articulo> prestamo;
+    private List<Asociado> asociados;
+
+    // Procesamiento
+    private Queue<Accion> accClientes;
+    private Queue<Accion> accEmpleados;
+    private List<Factura> facturas;
+
+   public VideoRent(String entrada1, String entrada2, String entrada3,
+           String salida1, String salida2, String salida3,
+           String salida4, String salida5 ) {
+
+        BufferedReader buffEntrada1 = null;
+        BufferedReader buffEntrada2 = null;
+        BufferedReader buffEntrada3 = null;
+        PrintStream strmSalida1 = null;
+        PrintStream strmSalida2 = null;
+        PrintStream strmSalida3 = null;
+        PrintStream strmSalida4 = null;
+        PrintStream strmSalida5 = null;
 
         try {
-            in1 = new BufferedReader(new FileReader(fin1));
-            in2 = new BufferedReader(new FileReader(fin2));
-            in3 = new BufferedReader(new FileReader(fin3));
-            in4 = new BufferedReader(new FileReader(fin4));
-            out1 = new PrintStream(fout1);
-            out2 = new PrintStream(fout2);
-
-            // si no hubo error, los asigno a los dos
-            this.in1 = in1;
-            this.in2 = in2;
-            this.in3 = in3;
-            this.in4 = in4;
-            this.out1 = out1;
-            this.out2 = out2;
-        } catch (FileNotFoundException fnfe) {
-            System.err.println("Error al crear archivos, usando entrada y" +
-                    " salida estandar");
+            buffEntrada1 = new BufferedReader(new FileReader(entrada1));
+            buffEntrada2 = new BufferedReader(new FileReader(entrada2));
+            buffEntrada3 = new BufferedReader(new FileReader(entrada3));
+            strmSalida1 = new PrintStream(salida1);
+            strmSalida2 = new PrintStream(salida2);
+            strmSalida3 = new PrintStream(salida3);
+            strmSalida4 = new PrintStream(salida4);
+            strmSalida5 = new PrintStream(salida5);
+        } catch (IOException e) {
+            System.err.println("Error al crear los archivos:\n\t"+
+                    salida1 + "\n\t" +
+                    salida2 + "\n\t" +
+                    salida3 + "\n\t" +
+                    salida4 + "\n\t" +
+                    salida5 + "\n\t");
+            System.err.println(e.getMessage());
+            //System.err.println(e.getCause().toString());
         }
+
+        this.asociadosIn = buffEntrada1;
+        this.articulosIn = buffEntrada2;
+        this.accionesIn = buffEntrada3;
+
+        this.accionesOut = strmSalida1;
+        this.facturasOut = strmSalida2;
+        this.stockOut = strmSalida3;
+        this.asociadosOut = strmSalida4;
+        this.prestamoOut = strmSalida5;
+
+        this.init();
     }
+
+    public VideoRent(String entrada1, String entrada2, String entrada3) {
+
+        BufferedReader buffEntrada1 = null;
+        BufferedReader buffEntrada2 = null;
+        BufferedReader buffEntrada3 = null;
+        PrintStream strmSalida1 = null;
+        PrintStream strmSalida2 = null;
+        PrintStream strmSalida3 = null;
+        PrintStream strmSalida4 = null;
+        PrintStream strmSalida5 = null;
+
+        try {
+            buffEntrada1 = new BufferedReader(new FileReader(entrada1));
+            buffEntrada2 = new BufferedReader(new FileReader(entrada2));
+            buffEntrada3 = new BufferedReader(new FileReader(entrada3));
+            strmSalida1 = new PrintStream(this.defSalida1);
+            strmSalida2 = new PrintStream(this.defSalida2);
+            strmSalida3 = new PrintStream(this.defSalida3);
+            strmSalida4 = new PrintStream(this.defSalida4);
+            strmSalida5 = new PrintStream(this.defSalida5);
+        } catch (IOException e) {
+            System.err.println("Error al crear los archivos:\n\t"+
+                    this.defSalida1 + "\n\t" +
+                    this.defSalida2 + "\n\t" +
+                    this.defSalida3 + "\n\t" +
+                    this.defSalida4 + "\n\t" +
+                    this.defSalida5 + "\n\t");
+            System.err.println(e.getMessage());
+            //System.err.println(e.getCause().toString());
+        }
+
+        this.asociadosIn = buffEntrada1;
+        this.articulosIn = buffEntrada2;
+        this.accionesIn = buffEntrada3;
+
+        this.accionesOut = strmSalida1;
+        this.facturasOut = strmSalida2;
+        this.stockOut = strmSalida3;
+        this.asociadosOut = strmSalida4;
+        this.prestamoOut = strmSalida5;
+
+        this.init();
+    }
+
+    private void init(){
+        // Almacenamiento
+        this.stock = new ArrayList<Articulo>();
+        this.prestamo = new ArrayList<Articulo>();
+        this.asociados = new ArrayList<Asociado>();
+
+        // Procesamiento
+        this.accClientes = new LinkedList<Accion>();
+        this.accEmpleados = new LinkedList<Accion>();
+        this.facturas = new ArrayList<Factura>();
+    }
+
+
 
     private Accion crearAccionCliente(String linea) {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Accion t = null;
-               
+
         if (tipoOp.equals("a")) {
             t = new Asociarse(tokens[1],tokens[2],
                             tokens[3],tokens[4],tokens[5],tokens[6],
@@ -93,7 +199,7 @@ public class VideoRent {
         } else if (tipoOp.equals("p")) {
             t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
         } else if(tipoOp.equals("b")){
-            t = new AbandonarTienda(tokens[1]);            
+            t = new AbandonarTienda(tokens[1]);
         } else if(tipoOp.equals("d")){
             t = new DevolverArticulo(tokens[1],tokens[2]);
         } else if(tipoOp.equals("e")){
@@ -104,9 +210,9 @@ public class VideoRent {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Accion t = null;
-               
+
         if(tipoOp.equals("r")){
-            t = new 
+            t = new
         } else if(tipoOp.equals("c")){
             t = new
         } else if(tipoOp.equals("t")){
@@ -123,21 +229,42 @@ public class VideoRent {
         return t;
     }
 
-    private void procesar() {
-        String linea1 = "";
-        String linea2 = "";
-        String linea3 = "";
-        String linea4 = "";
+    public void leer() {
+        this.leerAsociados();
+        this.leerArticulos();
+        this.leerAcciones();
+    }
+
+    private void leerAsociados() {
+        String linea = "";
         try {
-            while ((linea1 = in1.readLine() && ) != null) {
-                Accion t = crearAccionCliente(linea);
-                ////////////////////////////////////
-                //
-                // ACA FALTA HACER ALGO CON LA T KE DEVUELVE ESTA VAINA
-                //
-                //////////////////////////////////////
-//                Status s = banco.ejecutarTransaccion(t);
-               // out1.println(s.toString());
+            while ((linea = this.asociadosIn.readLine()) != null) {
+                Asociado asociado = crearAsociado(linea);
+                this.asociados.add(asociado);
+            }
+        } catch (IOException ioe) {
+            System.err.println("Error: " + ioe);
+        }
+    }
+
+    private void leerArticulos() {
+        String linea = "";
+        try {
+            while ((linea = this.articulosIn.readLine()) != null) {
+                Articulo articulo = crearArticulo(linea);
+                this.stock.add(articulo);
+            }
+        } catch (IOException ioe) {
+            System.err.println("Error: " + ioe);
+        }
+    }
+
+    private void leerAcciones() {
+        String linea = "";
+        try {
+            while ((linea = this.accionesIn.readLine()) != null) {
+                Accion accion = crearAccionCliente(linea);
+                this.accClientes.add(accion);
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
@@ -145,40 +272,27 @@ public class VideoRent {
     }
 
     /**
-     * @param args the command line arguments
+     * Método Main.
+     * @param args argumentos de entrada de la linea de comandos.
      */
     public static void main(String[] args) {
-        String genero = "fan";
-        String[] arrayString = new String[]{"1", "2", "3", "4"};
+        VideoRent videoRent;
+        if (args.length == 3) {
+            videoRent = new VideoRent(args[0], args[1], args[2]);
+        } else if (args.length == 8) {
+           videoRent = new VideoRent(args[0], args[1], args[2], args[3], args[4],
+                   args[5], args[6], args[7]);
+        } else {
+           System.err.println("Sintaxis:\n\t VideoRent <asociadosAntes> " +
+                   "<articulosAntes> <accionesClientes>\n\t  VideoRent " +
+                   "<asociadosAntes> <articulosAntes> <accionesClientes> " +
+                   "<accionesEmpleados> <facturas> <articulosDespues> " +
+                   "<asociadosDespues> <articulosPrestamo>");
+           System.exit(-1);
+        }
 
-        ArrayList<String> actores = new ArrayList<String>(arrayString.length);
-        actores.addAll(Arrays.asList(arrayString));
-        String[] arrayString2 = new String[]{"1", "2", "3", "5"};
-
-        ArrayList<String> actores2 = new ArrayList<String>(arrayString2.length);
-        actores2.addAll(Arrays.asList(arrayString2));
-
-        String nombre = "thor";
-        int anio = 2011;
-        String formato = "HD";
-        String director = "Np";
-        String escritor = "BM";
-        String secuela = "thor2";
-        String genero1 = "fan1";
-        Articulo art1 = new Pelicula(genero, actores, nombre, anio, formato, director, escritor, secuela);
-        Articulo art2 = new Pelicula(genero, actores, nombre, anio, formato, director, escritor, secuela);
-        Articulo art3 = new Pelicula(genero1, actores2, nombre, anio, formato, director, escritor, secuela);
-        if(art1.equals(art3)){
-        System.out.println("1");
-        }
-        if(art1.equals(art2)){
-        System.out.println("2");
-        }
-        if(art2.equals(art1)){
-        System.out.println("4");
-        }
-        if(art2.equals(art3)){
-        System.out.println("3");
-        }
+        videoRent.leer();
+        videoRent.procesar();
+        videoRent.escribir();
     }
 }
