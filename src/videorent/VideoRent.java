@@ -1,18 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package videorent;
 
-import articulo.Articulo;
-import articulo.Pelicula;
 import java.util.ArrayList;
+import java.util.Arrays;
+import videorent.articulo.Articulo;
+import videorent.articulo.Pelicula;
 
 /**
  *
  * @author victor
  */
 public class VideoRent {
+    
 
     /**
      * @param args the command line arguments
@@ -22,16 +20,12 @@ public class VideoRent {
         String[] arrayString = new String[]{"1", "2", "3", "4"};
         
         ArrayList<String> actores = new ArrayList<String>(arrayString.length);
-        for (int i = 0; i < arrayString.length; i++) {
-            actores.add(arrayString[i]);
-        }
+        actores.addAll(Arrays.asList(arrayString));
         
         String[] arrayString2 = new String[]{"1", "2", "3", "5"};
          
         ArrayList<String> actores2 = new ArrayList<String>(arrayString2.length);
-        for (int i = 0; i < arrayString2.length; i++) {
-            actores2.add(arrayString2[i]);
-        }
+        actores2.addAll(Arrays.asList(arrayString2));
         
         String nombre = "thor";
         int anio = 2011;
