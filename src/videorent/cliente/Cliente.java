@@ -15,12 +15,6 @@ public class Cliente {
     protected String telefono;
 
     /**
-     * Construye un nuevo @code{Cliente} vacío.
-     */
-    public Cliente() {
-    }
-
-    /**
      * Construye un nuevo @code{Cliente} con la información suministrada.
      * @param cedula
      * @param nombre

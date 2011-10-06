@@ -8,7 +8,15 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import videorent.acciones.AbandonarTienda;
 import videorent.acciones.Accion;
+import videorent.acciones.ActualizarTarjeta;
+import videorent.acciones.Asociarse;
+import videorent.acciones.DevolverArticulo;
+import videorent.acciones.LlevarParaAlquiler;
+import videorent.acciones.LlevarParaCompra;
+import videorent.acciones.Pagar;
+import videorent.acciones.PedirRecogerArticulo;
 import videorent.articulo.Articulo;
 import videorent.articulo.Pelicula;
 
@@ -64,23 +72,23 @@ public class VideoRent {
         Accion t = null;
                
         if (tipoOp.equals("a")) {
-            t = new Asociarse(Integer.parseInt(tokens[1]),
-                             Integer.parseInt(tokens[2]),
-                             Integer.parseInt(tokens[3]));
+            t = new Asociarse(tokens[1],tokens[2],
+                            tokens[3],tokens[4],tokens[5],tokens[6],tokens[7],tokens[8],
+                            tokens[9],tokens[10]);
         } else if (tipoOp.equals("t")) {
-            t = new ActualizarTarjeta(String codCliente, TarjetaCredito tarjeta)
+            t = new ActualizarTarjeta(tokens[1],tokens[2]);
         } else if (tipoOp.equals("c")) {
-            t = new LlevarParaCompra(String codCliente, String codArticulo);
+            t = new LlevarParaCompra(tokens[1],tokens[2]);
         } else if (tipoOp.equals("r")) {
-            t = new LlevarParaAlquiler(String codCliente, String codArticulo);
+            t = new LlevarParaAlquiler(tokens[1],tokens[2]);
         } else if (tipoOp.equals("p")) {
-            t = new Pagar(String codCliente, double montoEntregado);
+            t = new Pagar(tokens[1], Double.parseDouble(tokens[2]));
         } else if(tipoOp.equals("b")){
-            t = new AbandonarTienda(String codCliente);            
+            t = new AbandonarTienda(tokens[1]);            
         } else if(tipoOp.equals("d")){
-            t = new DevolverArticulo(String codCliente, String codArticulo);
-        } else if(tipoOp.equals("e"){
-            t = new PedirRecogerArticulo(String codCliente, String codArticulo);
+            t = new DevolverArticulo(tokens[1],tokens[2]);
+        } else if(tipoOp.equals("e")){
+            t = new PedirRecogerArticulo(tokens[1],tokens[2]);
         }
       
         return t;

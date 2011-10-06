@@ -50,12 +50,6 @@ public class Asociado extends Cliente {
     private ArrayList<Alquiler> alquileresVencidos;
 
     /**
-     * Construye un nuevo {@code Asociado}, vacío.
-     */
-    public Asociado() {
-    }
-
-    /**
      * Construye un nuevo {@code Asociado}, con la información suministrada. Los
      * parámetros son autoexplicativos.
      * @param cedula
