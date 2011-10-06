@@ -1,7 +1,5 @@
 package videorent.acciones;
 
-import java.util.Date;
-
 /**
  * Representa la acción que realiza un cliente para actualizar los datos de su
  * tarjeta de crédito.
