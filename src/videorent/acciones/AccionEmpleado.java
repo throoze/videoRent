@@ -17,7 +17,7 @@ public class AccionEmpleado implements Accion {
      * operador {@code instanceof}, debido a que tiene alto impacto en el
      * desempeño de la aplicación.
      */
-    public char id;
+    protected char id;
 
     /**
      * Construye una AccionCliente vacía.

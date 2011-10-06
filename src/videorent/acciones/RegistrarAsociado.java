@@ -14,15 +14,30 @@ package videorent.acciones;
 public class RegistrarAsociado extends AccionEmpleado {
     private String codAsociado;
 
+    /**
+     * Construye una nueva acción, del tipo Registrar asociado, de acuerdo a la
+     * información suministrada.
+     *
+     * @param id
+     * @param codAsociado
+     */
     public RegistrarAsociado(String codAsociado, char id) {
         super(id);
         this.codAsociado = codAsociado;
     }
 
+    /**
+     * Devuelve el código del asociado.
+     * @return el código del asociado.
+     */
     public String getCodAsociado() {
         return codAsociado;
     }
 
+    /**
+     * Establece el valor del código del asociado
+     * @param codAsociado valor del código del asociado
+     */
     public void setCodAsociado(String codAsociado) {
         this.codAsociado = codAsociado;
     }
