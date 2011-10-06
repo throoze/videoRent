@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ArticuloAudiovisual extends Articulo {
     protected String genero;
-    protected ArrayList<String> actores;
+    protected String actores;
 
     /**
      * Constructor de la clase ArticuloAudiovisual
@@ -24,7 +24,7 @@ public class ArticuloAudiovisual extends Articulo {
      * @param nombre El nombre del articulo audio-visual
      * @param anio  El año de creación
      */
-    public ArticuloAudiovisual(String genero, ArrayList<String> actores, String nombre, int anio) {
+    public ArticuloAudiovisual(String genero, String actores, String nombre, int anio) {
         super(nombre, anio);
         this.genero = genero;
         this.actores = actores;

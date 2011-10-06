@@ -25,8 +25,8 @@ public class TemporadaSerie extends ArticuloAudiovisual{
      * @param creador El creador de la serie
      * @param cantEpisodios El número de episodios de la serie
      */
-    public TemporadaSerie(String genero, ArrayList<String> actores, String nombre, int anio, int numTemporada, String creador, int cantEpisodios) {
-        super(genero, actores, nombre, anio);
+    public TemporadaSerie(String actores, String nombre, int anio, int numTemporada, String creador, int cantEpisodios) {
+        super(null, actores, nombre, anio);
         this.numTemporada = numTemporada;
         this.creador = creador;
         this.cantEpisodios = cantEpisodios;

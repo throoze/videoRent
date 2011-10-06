@@ -25,7 +25,10 @@ import videorent.acciones.LlevarParaCompra;
 import videorent.acciones.Pagar;
 import videorent.acciones.PedirRecogerArticulo;
 import videorent.articulo.Articulo;
+import videorent.articulo.JuegoEducativo;
+import videorent.articulo.JuegoRecreativo;
 import videorent.articulo.Pelicula;
+import videorent.articulo.TemporadaSerie;
 import videorent.cliente.Asociado;
 import videorent.fiscal.Factura;
 
@@ -243,7 +246,19 @@ public class VideoRent {
         Matcher m = p.matcher(tokens[0]);
         Articulo a = null;
         if (m.matches()){
-            //proceso
+            // saco la primera letra y veo a ke constructor llamo (pelicula, serie, etc)
+            char temp = tipoOp.charAt(0);
+            if(temp=='P'){
+                a = new Pelicula(tokens[4], tokens[8], tokens[2], Integer.parseInt(tokens[3]), tokens[5], tokens[6], tokens[7], tokens[9]);                
+            } else if(temp=='S'){
+                a = new TemporadaSerie(tokens[6], tokens[2], Integer.parseInt(tokens[4]), Integer.parseInt(tokens[3]), tokens[5], Integer.parseInt(tokens[7]));                                        
+            } else if(temp=='R'){
+                a = new JuegoRecreativo(tokens[2], Integer.parseInt(tokens[6]), tokens[5], tokens[3], tokens[4]);                                        
+            } else if(temp=='E'){
+                a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]), tokens[4], tokens[3]);
+            }
+            
+            this.stock.put(a, tokens[1]);
         }
         else 
             throw new IOException("Error en el archivo de entrada de artículos");
@@ -278,7 +293,6 @@ public class VideoRent {
             for(int u=0; u<contador; u++){
                 linea = this.articulosIn.readLine();
                 Articulo articulo = crearArticulo(linea);
-                this.stock.add(articulo);
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
