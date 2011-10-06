@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package videorent.acciones;
 
-import fiscal.TarjetaCredito;
+import videorent.fiscal.TarjetaCredito;
 
 /**
  * Representa la acción de actualizar los datos de la tarjeta de credito

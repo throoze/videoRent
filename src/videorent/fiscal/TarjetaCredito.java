@@ -1,7 +1,7 @@
-package fiscal;
+package videorent.fiscal;
 
-import cliente.Cliente;
 import java.util.Date;
+import videorent.cliente.Cliente;
 
 /**
  * Representa la tarjeta de credito de cada cliente de la tienda videoRent

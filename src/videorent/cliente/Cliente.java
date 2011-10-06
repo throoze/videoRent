@@ -1,4 +1,4 @@
-package cliente;
+package videorent.cliente;
 
 /**
  * Representa a un cliente de la tienda VideoRent
