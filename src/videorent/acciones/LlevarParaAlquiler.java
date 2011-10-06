@@ -11,8 +11,8 @@ public class LlevarParaAlquiler extends AccionCliente{
     private String codCliente;
     private String codArticulo;
 
-    public LlevarParaAlquiler(String codCliente, String codArticulo, char id) {
-        super(id);
+    public LlevarParaAlquiler(String codCliente, String codArticulo) {
+        super('r');
         this.codCliente = codCliente;
         this.codArticulo = codArticulo;
     }

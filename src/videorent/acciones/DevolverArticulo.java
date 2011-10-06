@@ -16,8 +16,8 @@ public class DevolverArticulo extends AccionCliente{
      * @param codArticulo El código del artículo
      * @param id El código de la acción
      */
-    public DevolverArticulo(String codCliente, String codArticulo, char id) {
-        super(id);
+    public DevolverArticulo(String codCliente, String codArticulo) {
+        super('d');
         this.codCliente = codCliente;
         this.codArticulo = codArticulo;
     }

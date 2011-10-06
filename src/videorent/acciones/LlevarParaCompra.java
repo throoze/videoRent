@@ -11,8 +11,8 @@ public class LlevarParaCompra extends AccionCliente{
     private String codCliente;
     private String codArticulo;
 
-    public LlevarParaCompra(String codCliente, String codArticulo, char id) {
-        super(id);
+    public LlevarParaCompra(String codCliente, String codArticulo) {
+        super('c');
         this.codCliente = codCliente;
         this.codArticulo = codArticulo;
     }

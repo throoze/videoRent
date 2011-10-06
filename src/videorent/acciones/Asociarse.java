@@ -13,8 +13,8 @@ public class Asociarse extends AccionCliente{
     private Cliente cliente; 
     private String tipoMembresia;
 
-    public Asociarse(Cliente cliente, String tipoMembresia, char id) {
-        super(id);
+    public Asociarse(Cliente cliente, String tipoMembresia) {
+        super('a');
         this.cliente = cliente;
         this.tipoMembresia = tipoMembresia;
     }
