@@ -1,0 +1,47 @@
+package cliente;
+
+/**
+ * Representa a un cliente de la tienda VideoRent
+ * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
+ * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
+ * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
+ * @version 0.1 - 04.10.2011
+ */
+public class Cliente {
+    protected String cedula;
+    protected String nombre;
+    protected String apellido;
+    protected String telefono;
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+}
