@@ -1,6 +1,6 @@
 package videorent.acciones;
 
-import fiscal.TarjetaCredito;
+import videorent.fiscal.TarjetaCredito;
 
 /**
  * Representa la acción que realiza un cliente para actualizar los datos de su

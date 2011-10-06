@@ -1,4 +1,4 @@
-package fiscal;
+package videorent.fiscal;
 
 import cliente.Cliente;
 import java.util.Date;
@@ -101,5 +101,5 @@ public class TarjetaCredito {
     public void setDueño(Cliente dueño) {
         this.dueño = dueño;
     }
-    
+
 }
