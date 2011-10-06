@@ -1,13 +1,12 @@
 package videorent.articulo;
 
  /**
- * Representa los artículos que comercia la tienda 
+ * Representa los artículos que comercia la tienda
  * VideoRent, hereda de Articulo
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
- * @author <a href="julesallblack@gmail.com">Julio López</a> 06-39821 
- * @author <a href="victor.dpo@gmail.com">Victor De Ponte</a> 05-38087 
+ * @author <a href="julesallblack@gmail.com">Julio López</a> 06-39821
+ * @author <a href="victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  */
-
 public abstract class Articulo {
     protected String nombre;
     protected int anio;
@@ -15,27 +14,27 @@ public abstract class Articulo {
     public double montoMulta;
     public double precioAlquiler;
     public double precioVenta;
-    
+
     /**
      * Constructor de la clase
      * @param nombre El nombre del artículo
-     * @param anio El año de creación del artículo 
+     * @param anio El año de creación del artículo
      */
     public Articulo(String nombre, int anio) {
         this.nombre = nombre;
         this.anio = anio;
     }
-     
+
     /**
      * Getter del atributo anio
-     * @return El año de creación     
+     * @return El año de creación
      */
     public int getAnio() {
         return anio;
     }
     /**
      * Setter del atributo anio
-     * @param anio El año de creación     
+     * @param anio El año de creación
      */
     public void setAnio(int anio) {
         this.anio = anio;
@@ -116,7 +115,7 @@ public abstract class Articulo {
      * Metodo abstracto para obtener la multa asociada a un
      * articulo no devuelto a tiempo
      * @param dias
-     * @return 
+     * @return
      */
     public abstract Double getMulta(int dias);
 
@@ -149,5 +148,4 @@ public abstract class Articulo {
         }
         return true;
     }
-   
 }

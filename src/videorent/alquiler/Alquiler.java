@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 import videorent.articulo.Articulo;
 
-
 /**
  * Representa un Conjunto de {@code Articulos} que han sido alquilados, en
  * una misma fecha.

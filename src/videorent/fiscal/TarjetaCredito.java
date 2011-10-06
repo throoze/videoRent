@@ -4,7 +4,8 @@ import cliente.Cliente;
 import java.util.Date;
 
 /**
- * Representa la tarjeta de credito de cada cliente de la tienda videoRent
+ * Representa la tarjeta de crédito de cada cliente de la tienda videoRent.
+ *
  * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
  * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
@@ -16,6 +17,7 @@ public class TarjetaCredito {
     private int codSeguridad;
     private Date vencimiento;
     private Cliente dueño;
+
     /**
      * Constructor de la clase TarjetaCredito
      * @param numero El número de la tarjeta
@@ -24,82 +26,92 @@ public class TarjetaCredito {
      * @param vencimiento La fecha de vencimiento
      * @param dueño El dueño de la tarjeta
      */
-    public TarjetaCredito(long numero, String Banco, int codSeguridad, Date vencimiento, Cliente dueño) {
+    public TarjetaCredito(long numero, String Banco, int codSeguridad,
+            Date vencimiento, Cliente dueño) {
         this.numero = numero;
         this.Banco = Banco;
         this.codSeguridad = codSeguridad;
         this.vencimiento = vencimiento;
         this.dueño = dueño;
     }
+
     /**
-     * Getter del atributo banco
+     * Devuelve el atributo banco
      * @return El nombre del banco
      */
     public String getBanco() {
         return Banco;
     }
+
     /**
-     * Setter del atributo banco
+     * Establece el atributo banco
      * @param Banco El nombre del banco
      */
     public void setBanco(String Banco) {
         this.Banco = Banco;
     }
+
     /**
-     * Getter del atributo codSeguridad
+     * Devuelve el atributo codSeguridad
      * @return El código de seguridad
      */
     public int getCodSeguridad() {
         return codSeguridad;
     }
+
     /**
-     * Setter del atributo codSeguridad
+     * Establece el atributo codSeguridad
      * @param codSeguridad El código de seguridad
      */
     public void setCodSeguridad(int codSeguridad) {
         this.codSeguridad = codSeguridad;
     }
+
     /**
-     * Getter del atributo numero
+     * Devuelve el atributo numero
      * @return El número de la tarjeta
      */
     public long getNumero() {
         return numero;
     }
+
     /**
-     * Setter del atributo numero
+     * Establece el atributo numero
      * @param numero El número de la tarjeta
      */
     public void setNumero(long numero) {
         this.numero = numero;
     }
+
     /**
-     * Getter del atributo vencimiento
+     * Devuelve el atributo vencimiento
      * @return La fecha de vencimiento
      */
     public Date getVencimiento() {
         return vencimiento;
     }
+
     /**
-     * Setter del atributo vencimiento
+     * Establece el atributo vencimiento
      * @param vencimiento La fecha de vencimiento
      */
     public void setVencimiento(Date vencimiento) {
         this.vencimiento = vencimiento;
     }
+
     /**
-     * Getter del atributo dueño
+     * Devuelve el atributo dueño
      * @return El cliente dueño de la tarjeta
      */
     public Cliente getDueño() {
         return dueño;
     }
+
     /**
-     * Setter del atributo dueño
+     * Establece el atributo dueño
      * @param dueño El cliente dueño de la tarjeta
      */
     public void setDueño(Cliente dueño) {
         this.dueño = dueño;
     }
-
 }

@@ -1,6 +1,5 @@
 package videorent;
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -97,7 +96,6 @@ public class VideoRent {
             System.err.println("Error: " + ioe);
         }
     }
-
 
     /**
      * @param args the command line arguments

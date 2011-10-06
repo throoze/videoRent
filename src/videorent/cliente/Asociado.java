@@ -1,6 +1,5 @@
 package videorent.cliente;
 
-import cliente.Cliente;
 import java.util.ArrayList;
 import videorent.alquiler.Alquiler;
 
