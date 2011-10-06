@@ -9,8 +9,18 @@ import articulo.Pelicula;
 import java.util.ArrayList;
 
 /**
+ * Sistema de venta y alquiler de artículos audiovisuales e interactivos de la
+ * tienda VideoRent. Proyecto 0 del la materia Laboratorio de Lenguajes de
+ * Programación, Septiembre-Diciembre 2011.
+ * Profesora: Gabriela Montoya
+ * Sinópsis:
+ *      compilado:
+ *          javac VideoRent.java
  *
- * @author victor
+ * @author <a href="mailto:victor.dpo@gmail.com">Victor De Ponte</a> 05-38087
+ * @author <a href="mailto:julesallblack@gmail.com">Julio López</a> 06-39821
+ * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
+ * @version 1.0 - 04.10.2011
  */
 public class VideoRent {
 
@@ -20,19 +30,19 @@ public class VideoRent {
     public static void main(String[] args) {
         String genero = "fan";
         String[] arrayString = new String[]{"1", "2", "3", "4"};
-        
+
         ArrayList<String> actores = new ArrayList<String>(arrayString.length);
         for (int i = 0; i < arrayString.length; i++) {
             actores.add(arrayString[i]);
         }
-        
+
         String[] arrayString2 = new String[]{"1", "2", "3", "5"};
-         
+
         ArrayList<String> actores2 = new ArrayList<String>(arrayString2.length);
         for (int i = 0; i < arrayString2.length; i++) {
             actores2.add(arrayString2[i]);
         }
-        
+
         String nombre = "thor";
         int anio = 2011;
         String formato = "HD";
