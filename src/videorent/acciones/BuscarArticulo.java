@@ -27,10 +27,18 @@ public class BuscarArticulo extends AccionEmpleado {
         this.codArtículo = codArtículo;
     }
 
+    /**
+     * Devuelve el código del artículo a buscar
+     * @return el código del artículo a buscar
+     */
     public String getCodArtículo() {
         return codArtículo;
     }
 
+    /**
+     * Devuelve el código del cliente que tiene el artículo a buscar.
+     * @return el código del cliente que tiene el artículo a buscar.
+     */
     public String getCodCliente() {
         return codCliente;
     }

@@ -12,5 +12,41 @@ package videorent.acciones;
  * @version
  */
 public class InformarError {
+    private String codCliente;
+    private int codError;
 
+    /**
+     * Construye una nueva acción del tipo InformarError.
+     * @param codCliente código del cliente a quien se le va a informar del
+     * error.
+     * @param codError código del error. Puede ser: 0 => 'Cliente no
+     * registrado', 1 => 'artículo no está en existencia', 2 => 'acción no
+     * permitida para este tipo de cliente', 3 => 'pago incompleto', 4 =>
+     * 'pago de más', 5 => 'cliente ya registrado', 6 => 'cliente suspendido',
+     * 7 => 'cualquier otra operación no válida'.
+     */
+    public InformarError(String codCliente, int codError) {
+        this.codCliente = codCliente;
+        this.codError = codError;
+    }
+
+    /**
+     * Devuelve el código del cliente a quien se le informa del error.
+     * @return código del cliente a quien se le informa del error.
+     */
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    /**
+     * Devuelve el código de error del cual se desea informar.
+     * @return código de error del cual se desea informar. Puede ser: 0 =>
+     * 'Cliente no registrado', 1 => 'artículo no está en existencia', 2 =>
+     * 'acción no permitida para este tipo de cliente', 3 => 'pago incompleto',
+     * 4 => 'pago de más', 5 => 'cliente ya registrado', 6 => 'cliente
+     * suspendido', 7 => 'cualquier otra operación no válida'.
+     */
+    public int getCodError() {
+        return codError;
+    }
 }

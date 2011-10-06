@@ -11,6 +11,37 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class CobrarPerdido {
+public class CobrarPerdido extends AccionEmpleado {
+    private String codCliente;
+    private String codArticulo;
 
+    /**
+     * Construye una nueva acción del tipo CobrarPerdido
+     *
+     * @param codCliente código del cliente a facturar
+     * @param codArticulo código del artículo perdido
+     */
+    public CobrarPerdido(String codCliente, String codArticulo) {
+        super('p');
+        this.codCliente = codCliente;
+        this.codArticulo = codArticulo;
+    }
+
+    /**
+     * Devuelve el código del artículo perdido.
+     *
+     * @return código del artículo perdido
+     */
+    public String getCodArticulo() {
+        return codArticulo;
+    }
+
+    /**
+     * Devuelve el código del cliente a facturar.
+     *
+     * @return código del cliente a facturar
+     */
+    public String getCodCliente() {
+        return codCliente;
+    }
 }

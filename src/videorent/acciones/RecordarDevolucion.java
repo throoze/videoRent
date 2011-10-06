@@ -11,6 +11,24 @@ package videorent.acciones;
  * @author <a href="http://www.usb.ve/">Universidad Simón Bolívar</a>
  * @version
  */
-public class RecordarDevolucion {
+public class RecordarDevolucion extends AccionEmpleado {
+    private String codAsociado;
 
+    /**
+     * Construye una nueva acción de tipo RecordarDevolucion, bajo la
+     * información suministrada.
+     * @param codAsociado código del asociado a quien recordarle.
+     */
+    public RecordarDevolucion(String codAsociado) {
+        super('l');
+        this.codAsociado = codAsociado;
+    }
+
+    /**
+     * Devuelve el código del asociado a quien se le recordará.
+     * @return código del asociado a quien se le recordará.
+     */
+    public String getCodAsociado() {
+        return codAsociado;
+    }
 }
