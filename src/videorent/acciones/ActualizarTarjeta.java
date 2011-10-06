@@ -12,9 +12,9 @@ package videorent.acciones;
 public class ActualizarTarjeta extends AccionCliente {
 
     private String codCliente;
-    private long numTarjeta;
+    private String numTarjeta;
     private String banco;
-    private int codSeguridad;
+    private String codSeguridad;
     private String vencimiento;
 
     /**
@@ -27,8 +27,8 @@ public class ActualizarTarjeta extends AccionCliente {
      * @param codSeguridad código de seguridad de la tarjeta.
      * @param vencimiento fecha de vencimiento de la tarjeta.
      */
-    public ActualizarTarjeta(String codCliente, long numTarjeta, String banco,
-            int codSeguridad, String vencimiento) {
+    public ActualizarTarjeta(String codCliente, String numTarjeta, String banco,
+            String codSeguridad, String vencimiento) {
         super('t');
         this.codCliente = codCliente;
         this.numTarjeta = numTarjeta;
@@ -57,7 +57,7 @@ public class ActualizarTarjeta extends AccionCliente {
      * Devuelve el código de seguridad de la tarjeta
      * @return el código de seguridad de la tarjeta
      */
-    public int getCodSeguridad() {
+    public String getCodSeguridad() {
         return codSeguridad;
     }
 
@@ -65,7 +65,7 @@ public class ActualizarTarjeta extends AccionCliente {
      * Devuelve el número de la tarjeta
      * @return el número de la tarjeta
      */
-    public long getNumTarjeta() {
+    public String getNumTarjeta() {
         return numTarjeta;
     }
 
