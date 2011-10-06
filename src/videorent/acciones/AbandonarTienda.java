@@ -14,8 +14,8 @@ public class AbandonarTienda extends AccionCliente{
      * @param codCliente El código del cliente
      * @param id El código de la acción
      */
-    public AbandonarTienda(String codCliente, char id) {
-        super(id);
+    public AbandonarTienda(String codCliente) {
+        super('b');
         this.codCliente = codCliente;
     }
     /**

@@ -16,8 +16,8 @@ public class Pagar extends AccionCliente{
      * @param montoEntregado El monto entregado en la caja
      * @param id El codigo de la acción
      */
-    public Pagar(String codCliente, double montoEntregado, char id) {
-        super(id);
+    public Pagar(String codCliente, double montoEntregado) {
+        super('p');
         this.codCliente = codCliente;
         this.montoEntregado = montoEntregado;
     }

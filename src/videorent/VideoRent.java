@@ -59,28 +59,30 @@ public class VideoRent {
     }
 
     private Accion crearTransaccion(String linea) {
-        String[] tokens = linea.split(" ");
+        String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Accion t = null;
-
-//        if (tipoOp.equals("apt")) {
-//            t = new Apertura(Integer.parseInt(tokens[1]),
-//                             Integer.parseInt(tokens[2]),
-//                             Integer.parseInt(tokens[3]));
-//        } else if (tipoOp.equals("dep")) {
-//            t = new Deposito(Integer.parseInt(tokens[1]),
-//                             Integer.parseInt(tokens[2]));
-//        } else if (tipoOp.equals("ret")) {
-//            t = new Retiro(Integer.parseInt(tokens[1]),
-//                           Integer.parseInt(tokens[2]));
-//        } else if (tipoOp.equals("trn")) {
-//            t = new Transferencia(Integer.parseInt(tokens[1]),
-//                                  Integer.parseInt(tokens[2]),
-//                                  Integer.parseInt(tokens[3]));
-//        } else if (tipoOp.equals("edc")) {
-//            t = new EstadoDeCuenta(Integer.parseInt(tokens[1]),out);
-//
-//        }
+               
+        if (tipoOp.equals("a")) {
+            t = new Asociarse(Integer.parseInt(tokens[1]),
+                             Integer.parseInt(tokens[2]),
+                             Integer.parseInt(tokens[3]));
+        } else if (tipoOp.equals("t")) {
+            t = new ActualizarTarjeta(String codCliente, TarjetaCredito tarjeta)
+        } else if (tipoOp.equals("c")) {
+            t = new LlevarParaCompra(String codCliente, String codArticulo);
+        } else if (tipoOp.equals("r")) {
+            t = new LlevarParaAlquiler(String codCliente, String codArticulo);
+        } else if (tipoOp.equals("p")) {
+            t = new Pagar(String codCliente, double montoEntregado);
+        } else if(tipoOp.equals("b")){
+            t = new AbandonarTienda(String codCliente);            
+        } else if(tipoOp.equals("d")){
+            t = new DevolverArticulo(String codCliente, String codArticulo);
+        } else if(tipoOp.equals("e"){
+            t = new PedirRecogerArticulo(String codCliente, String codArticulo);
+        }
+      
         return t;
     }
 
