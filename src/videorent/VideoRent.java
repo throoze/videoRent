@@ -33,6 +33,7 @@ import videorent.articulo.JuegoRecreativo;
 import videorent.articulo.Pelicula;
 import videorent.articulo.TemporadaSerie;
 import videorent.cliente.Asociado;
+import videorent.cliente.Cliente;
 import videorent.fiscal.Factura;
 import videorent.fiscal.TarjetaCredito;
 
@@ -84,6 +85,7 @@ public class VideoRent {
     private HashMap<Articulo,Integer> stock;
     private HashMap<Articulo,Integer> prestamo;
     private List<Asociado> asociados;
+    private HashMap<Cliente,ArrayList<Articulo>> carritos;
 
     // Procesamiento
     private ArrayList<Accion> accClientes;
@@ -196,6 +198,7 @@ public class VideoRent {
         this.stock = new HashMap<Articulo,Integer>();
         this.prestamo = new HashMap<Articulo,Integer>();
         this.asociados = new ArrayList<Asociado>();
+        this.carritos = new HashMap<Cliente, ArrayList<Articulo>>();
 
         // Procesamiento
         this.accClientes = new ArrayList<Accion>();
@@ -442,26 +445,29 @@ public class VideoRent {
             System.err.println("Error: " + ioe);
         }
     }
-    
+
     private void procesar() throws Exception {
+
         //si c=='a', alguien se kiere asociar. leo ac1 
         for(int y=0;y<this.numDias;y++){
             Accion ac1 = this.accClientes.get(y);   
+
             char c = ac1.getId();
             int aux = 0;
             if (c=='a') {
-                Asociarse asociar = (Asociarse)ac1;                
+                Asociarse asociar = (Asociarse)ac1;
                 Asociado aso =  new Asociado(String.valueOf(this.proxIdCliente),
-                    asociar.getTipoMembresia().toUpperCase().charAt(0), 
-                    asociar.getTipoMembresia(), asociar.getCedula(), 
-                    asociar.getNombre(), asociar.getApellido(), 
+                    asociar.getTipoMembresia().toUpperCase().charAt(0),
+                    asociar.getTipoMembresia(), asociar.getCedula(),
+                    asociar.getNombre(), asociar.getApellido(),
                     asociar.getTelefono(), asociar.getDireccion());
-               this.asociados.add(aso);  
-               
+               this.asociados.add(aso);
+
             } else if (c=='t') {
-                // Actualizo la tarjeta y busco a su dueño en asociados y los 
+                // Actualizo la tarjeta y busco a su dueño en asociados y los
                 // asigno mutuamente
                 ActualizarTarjeta actualizar = (ActualizarTarjeta)ac1;
+                
                 for(int j=0;j<this.asociados.size();j++){
                     Asociado asoci = this.asociados.get(j);
                     if(asoci.getCodigo().equals(actualizar.getCodCliente())){
@@ -481,7 +487,7 @@ public class VideoRent {
                         null);
                 this.asociados.get(aux).setTarjeta(tarjeta);
                 tarjeta.setDuenio(this.asociados.get(aux));
-                                
+
             } else if (c=='c') {
                 t = new LlevarParaCompra(tokens[1],tokens[2]);
             } else if (c=='r') {
@@ -512,7 +518,7 @@ public class VideoRent {
      * Método Main.
      * @param args argumentos de entrada de la linea de comandos.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         VideoRent videoRent = null;
         if (args.length == 3) {
             videoRent = new VideoRent(args[0], args[1], args[2]);
