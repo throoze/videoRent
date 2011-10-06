@@ -19,11 +19,17 @@ public class AbandonarTienda extends AccionCliente{
         super(id);
         this.codCliente = codCliente;
     }
-
+    /**
+     * Getter del atributo codCliente
+     * @return El código del cliente
+     */
     public String getCodCliente() {
         return codCliente;
     }
-
+    /**
+     * Setter del atributo codCliente
+     * @param codCliente El código del cliente
+     */
     public void setCodCliente(String codCliente) {
         this.codCliente = codCliente;
     }
