@@ -445,8 +445,8 @@ public class VideoRent {
     
     private void procesar() throws Exception {
         //si c=='a', alguien se kiere asociar. leo ac1 
-        for(int y=0;y<numDias;y++){
-            Accion ac1 = accClientes.get(y);   
+        for(int y=0;y<this.numDias;y++){
+            Accion ac1 = this.accClientes.get(y);   
             char c = ac1.getId();
             int aux = 0;
             if (c=='a') {
@@ -469,7 +469,8 @@ public class VideoRent {
                     }
                 }
                 if (aux==0){
-                    throw new Exception ("Error : El dueño de esa tarjeta no esta asociado");
+                    throw new Exception ("Error : El dueño de la tarjeta número "
+                         + actualizar.getNumTarjeta() + " no esta asociado");
                 }
                 String[] strFecha = actualizar.getVencimiento().split("/");
                 TarjetaCredito tarjeta = new TarjetaCredito(
