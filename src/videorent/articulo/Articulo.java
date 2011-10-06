@@ -1,4 +1,4 @@
-package articulo;
+package videorent.articulo;
 
  /**
  * Representa los artículos que comercia la tienda 
