@@ -2,6 +2,7 @@ package videorent.cliente;
 
 import java.util.ArrayList;
 import videorent.alquiler.Alquiler;
+import videorent.fiscal.TarjetaCredito;
 
 /**
  * Representa a los clientes que se han afiliado a VideoRent, los cuales pueden
@@ -39,6 +40,8 @@ public class Asociado extends Cliente {
      */
     protected String direccion;
 
+    private TarjetaCredito tarjeta;
+
     /**
      * Lista de alquileres activos
      */
@@ -52,7 +55,7 @@ public class Asociado extends Cliente {
     /**
      * Construye un nuevo {@code Asociado}, con la información suministrada. Los
      * parámetros son autoexplicativos.
-     * 
+     *
      * @param cedula
      * @param nombre
      * @param apellido
@@ -79,17 +82,15 @@ public class Asociado extends Cliente {
      * @param apellido
      * @param telefono
      * @param direccion
-     * @param alquileresActivos
-     * @param alquileresVencidos
      */
-    public Asociado(String codigo, char membresia, char estado, String cedula, String nombre, String apellido, String telefono, String direccion, ArrayList<Alquiler> alquileresActivos, ArrayList<Alquiler> alquileresVencidos) {
+    public Asociado(String codigo, char membresia, String estado, String cedula, String nombre, String apellido, String telefono, String direccion) {
         super(cedula, nombre, apellido, telefono);
         this.codigo = codigo;
         this.membresia = membresia;
-        this.estado = estado;
+        this.estado = estado.toUpperCase().charAt(0);
         this.direccion = direccion;
-        this.alquileresActivos = alquileresActivos;
-        this.alquileresVencidos = alquileresVencidos;
+        this.alquileresActivos = new ArrayList<Alquiler>();
+        this.alquileresVencidos = new ArrayList<Alquiler>();
     }
 
     /**
@@ -170,6 +171,22 @@ public class Asociado extends Cliente {
      */
     public void setEstado(char estado) {
         this.estado = estado;
+    }
+
+    /**
+     * Devuelve la tarjeta de crédito de este {@code Asociado}.
+     * @return la tarjeta de crédito de este {@code Asociado}.
+     */
+    public TarjetaCredito getTarjeta() {
+        return tarjeta;
+    }
+
+    /**
+     * Establece la tarjeta de crédito de este {@code Asociado}
+     * @param tarjeta tarjeta a asociar a este {@code Asociado}.
+     */
+    public void setTarjeta(TarjetaCredito tarjeta) {
+        this.tarjeta = tarjeta;
     }
 
     /**

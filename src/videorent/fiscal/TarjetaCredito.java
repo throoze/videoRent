@@ -16,7 +16,7 @@ public class TarjetaCredito {
     private String Banco;
     private int codSeguridad;
     private Date vencimiento;
-    private Cliente dueño;
+    private Cliente duenio;
 
     /**
      * Constructor de la clase TarjetaCredito
@@ -32,7 +32,7 @@ public class TarjetaCredito {
         this.Banco = Banco;
         this.codSeguridad = codSeguridad;
         this.vencimiento = vencimiento;
-        this.dueño = dueño;
+        this.duenio = dueño;
     }
 
     /**
@@ -103,15 +103,15 @@ public class TarjetaCredito {
      * Devuelve el atributo dueño
      * @return El cliente dueño de la tarjeta
      */
-    public Cliente getDueño() {
-        return dueño;
+    public Cliente getDuenio() {
+        return duenio;
     }
 
     /**
      * Establece el atributo dueño
      * @param dueño El cliente dueño de la tarjeta
      */
-    public void setDueño(Cliente dueño) {
-        this.dueño = dueño;
+    public void setDuenio(Cliente dueño) {
+        this.duenio = dueño;
     }
 }

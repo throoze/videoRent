@@ -31,6 +31,7 @@ import videorent.articulo.Pelicula;
 import videorent.articulo.TemporadaSerie;
 import videorent.cliente.Asociado;
 import videorent.fiscal.Factura;
+import videorent.fiscal.TarjetaCredito;
 
 /**
  * Sistema de venta y alquiler de artículos audiovisuales e interactivos de la
@@ -199,7 +200,8 @@ public class VideoRent {
         this.facturas = new ArrayList<Factura>();
     }
 
-    private Asociado leerAsociado(String linea, int numLinea) {
+    private Asociado leerAsociado(String linea, int numLinea) throws IOException
+    {
         String[] tokens = linea.split(" & ");
         if (tokens.length != 11) {
                     throw new IOException("VideoRent: Mal formato en el "
@@ -212,7 +214,28 @@ public class VideoRent {
             Pattern pattern = Pattern.compile("^[BP]d{4}$");
             Matcher matcher = pattern.matcher(tokens[0]);
             if (matcher.matches()) {
-
+                if (!(tokens[1].equals("activo") || tokens[1].equals("suspendido"))) {
+                    throws new IOException("VideoRent: Mal formato en el "
+                            + "archivo de entrada <"+this.strEntrada1+">:"
+                            + "linea " + numLinea + ".\n"
+                            + "Se esperaba estado 'activo' o 'suspendido'."
+                            + "\n\nEncontrado:\n\t\n"
+                            + "'" + tokens[1] + "'");
+                }
+                String[] strFecha = tokens[10].split("/");
+                TarjetaCredito tarjeta = new TarjetaCredito(
+                        Long.parseLong(tokens[7]), tokens[8],
+                        Integer.parseInt(tokens[9]), new Date(
+                                Integer.parseInt(strFecha[1]),
+                                Integer.parseInt(strFecha[0]),1),
+                        null);
+                Asociado resp = new Asociado(tokens[0], tokens[0].charAt(0) ,
+                        tokens[1], String.valueOf(Integer.parseInt(tokens[2])),
+                        tokens[3], tokens[4],
+                        String.valueOf(Integer.parseInt(tokens[5])),tokens[6]);
+                resp.setTarjeta(tarjeta);
+                tarjeta.setDuenio(resp);
+                return resp;
             } else {
                 throw new IOException("VideoRent: Mal formato en el código del"
                         + "asociado, en la linea "+ numLinea + ".\n\t"
@@ -273,7 +296,7 @@ public class VideoRent {
         }
         return t;
     }
-    
+
      private Articulo crearArticulo(String linea) throws IOException {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
@@ -284,23 +307,23 @@ public class VideoRent {
             // saco la primera letra y veo a ke constructor llamo (pelicula, serie, etc)
             char temp = tipoOp.charAt(0);
             if(temp=='P'){
-                a = new Pelicula(tokens[4], tokens[8], tokens[2], Integer.parseInt(tokens[3]), tokens[5], tokens[6], tokens[7], tokens[9]);                
+                a = new Pelicula(tokens[4], tokens[8], tokens[2], Integer.parseInt(tokens[3]), tokens[5], tokens[6], tokens[7], tokens[9]);
             } else if(temp=='S'){
-                a = new TemporadaSerie(tokens[6], tokens[2], Integer.parseInt(tokens[4]), Integer.parseInt(tokens[3]), tokens[5], Integer.parseInt(tokens[7]));                                        
+                a = new TemporadaSerie(tokens[6], tokens[2], Integer.parseInt(tokens[4]), Integer.parseInt(tokens[3]), tokens[5], Integer.parseInt(tokens[7]));
             } else if(temp=='R'){
-                a = new JuegoRecreativo(tokens[2], Integer.parseInt(tokens[6]), tokens[5], tokens[3], tokens[4]);                                        
+                a = new JuegoRecreativo(tokens[2], Integer.parseInt(tokens[6]), tokens[5], tokens[3], tokens[4]);
             } else if(temp=='E'){
                 a = new JuegoEducativo(tokens[2], Integer.parseInt(tokens[5]), tokens[4], tokens[3]);
             }
-            
+
             this.stock.put(a, tokens[1]);
         }
-        else 
+        else
             throw new IOException("Error en el archivo de entrada de artículos");
-        
+
         return a;
     }
-    
+
     public void leer() {
         this.leerAsociados();
         this.leerArticulos();
