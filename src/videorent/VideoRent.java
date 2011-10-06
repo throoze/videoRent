@@ -66,7 +66,7 @@ public class VideoRent {
         }
     }
 
-    private Accion crearAccion(String linea) {
+    private Accion crearAccionCliente(String linea) {
         String[] tokens = linea.split(" & ");
         String tipoOp = tokens[0];
         Accion t = null;
@@ -90,7 +90,14 @@ public class VideoRent {
             t = new DevolverArticulo(tokens[1],tokens[2]);
         } else if(tipoOp.equals("e")){
             t = new PedirRecogerArticulo(tokens[1],tokens[2]);
-        } else if(tipoOp.equals("r")){
+        } return t;
+    }
+    private Accion crearAccionEmpleado(String linea) {
+        String[] tokens = linea.split(" & ");
+        String tipoOp = tokens[0];
+        Accion t = null;
+               
+        if(tipoOp.equals("r")){
             t = new 
         } else if(tipoOp.equals("c")){
             t = new
@@ -112,7 +119,7 @@ public class VideoRent {
         String linea = "";
         try {
             while ((linea = in.readLine()) != null) {
-                Accion t = crearAccion(linea);
+                Accion t = crearAccionCliente(linea);
 //                Status s = banco.ejecutarTransaccion(t);
                 //out.println(s.toString());
             }
