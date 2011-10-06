@@ -196,30 +196,6 @@ public class VideoRent {
         this.init();
     }
 
-    private Asociado asociadoPorCodigo(String codigo) {
-        Iterator iter = this.asociados.iterator();
-        while(iter.hasNext()){
-            Asociado aux = (Asociado) iter.next();
-            if (aux.getCodigo().equals(codigo)) {
-                return aux;
-            }
-        }
-        return null;
-    }
-
-    private void retirarDeStock(String codigo){
-        Set<Articulo> articulos = this.stock.keySet();
-        Iterator iter = articulos.iterator();
-        Articulo aux;
-        while (iter.hasNext()){
-            aux = (Articulo) iter.next();
-            if (aux.getCodigo().equals(codigo)){
-                this.stock.put(aux, this.stock.get(aux) - 1);
-                break;
-            }
-        }
-    }
-
     private void init(){
         // Almacenamiento
         this.stock = new HashMap<Articulo,Integer>();
@@ -542,7 +518,8 @@ public class VideoRent {
             lista.add(accion.getCodArticulo());
             this.carritoVenta.put(cliente, lista);
         }
-        this.retirarDeStock(accion.getCodArticulo());
+        this.retirarDeStock(accion.getCodArticulo(),accion.getCodCliente(),
+                accion.getCedula());
     }
 
     private void procesarLlevarParaAlquiler(LlevarParaAlquiler accion){
@@ -600,6 +577,35 @@ public class VideoRent {
      */
     private void escribir() {
 
+    }
+
+    private Asociado asociadoPorCodigo(String codigo) {
+        Iterator iter = this.asociados.iterator();
+        while(iter.hasNext()){
+            Asociado aux = (Asociado) iter.next();
+            if (aux.getCodigo().equals(codigo)) {
+                return aux;
+            }
+        }
+        return null;
+    }
+
+    private void retirarDeStock(String codigo, String codCliente, String cedula)
+    {
+        String id = (codCliente != null ? codCliente : cedula);
+        Set<Articulo> articulos = this.stock.keySet();
+        Iterator iter = articulos.iterator();
+        Articulo aux;
+        while (iter.hasNext()){
+            aux = (Articulo) iter.next();
+            if (aux.getCodigo().equals(codigo)){
+                if (this.stock.get(aux) == 0) {
+                    generarInformarDeError(1,id);
+                }
+                this.stock.put(aux, this.stock.get(aux) - 1);
+                break;
+            }
+        }
     }
 
     /**
