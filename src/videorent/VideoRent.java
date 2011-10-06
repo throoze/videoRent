@@ -349,12 +349,16 @@ public class VideoRent {
                 }
                 this.proxIdCliente = Integer.parseInt(tokens[1]);
                 n = Integer.parseInt(tokens[0]);
-            }
-            for (int i = 0; i < n; i++) {
-                if ((linea = this.asociadosIn.readLine()) != null) {
-                    Asociado asociado = leerAsociado(linea,i);
-                    this.asociados.add(asociado);
+                for (int i = 0; i < n; i++) {
+                    if ((linea = this.asociadosIn.readLine()) != null) {
+                        Asociado asociado = leerAsociado(linea,i);
+                        this.asociados.add(asociado);
+                    }
                 }
+            } else {
+                throw new IOException("VideoRent: Error al leer el "
+                            + "archivo de entrada <"+this.strEntrada3+">:"
+                            + "linea 1.");
             }
         } catch (IOException ioe) {
             System.err.println("Error: " + ioe);
@@ -381,13 +385,53 @@ public class VideoRent {
         int n;
 
         try {
-            linea = this.accionesIn.readLine();
-            if (linea != null) {
-                throw new IOException("VideoRent: Mal formato en el "
+            if ((linea = this.accionesIn.readLine()) != null) {
+                String[] tokens = linea.split(" ");
+                if (tokens.length == 2) {
+                    this.numDias = Integer.parseInt(tokens[0]);
+                    this.numAcClientes = Integer.parseInt(tokens[1]);
+                    if ((linea = this.accionesIn.readLine()) != null) {
+                        Pattern p = Pattern.compile("d{2}/d{2}/d{4}");
+                        Matcher m = p.matcher(linea);
+                        if (m.matches()) {
+                            tokens = linea.split("/");
+                            if (tokens.length == 3) {
+                                this.inicio = new Date(
+                                            Integer.parseInt(tokens[2]),
+                                            Integer.parseInt(tokens[1]),
+                                            Integer.parseInt(tokens[0]));
+                                linea = this.accionesIn.readLine();
+                                for (int i = 0; i < this.numDias; i++){
+                                    linea = this.accionesIn.readLine();
+                                    this.crearAccionCliente(linea);
+                                }
+                            } else {
+                                throw new IOException("VideoRent: Error al"
+                            + " leer el archivo de entrada <"+
+                                        this.strEntrada3+">:"
+                            + "linea 2.");
+                            }
+                        } else {
+                            throw new IOException("VideoRent: Error al leer el "
                             + "archivo de entrada <"+this.strEntrada3+">:"
-                            + "linea 1. "
-                            + "Se esperaban dos elementos.\n\nEncontrado:\n\t"
-                            + "'" + linea + "'");
+                            + "linea 2.");
+                        }
+                    } else {
+                        throw new IOException("VideoRent: Error al leer el "
+                            + "archivo de entrada <"+this.strEntrada3+">:"
+                            + "linea 2.");
+                    }
+                } else {
+                    throw new IOException("VideoRent: Error al leer el "
+                            + "archivo de entrada <"+this.strEntrada3+">:"
+                            + "linea 1." +
+                            "Se esperaban dos elementos. Encontrado:\n"
+                    + "'" + linea + "'");
+                }
+            } else {
+                throw new IOException("VideoRent: Error al leer el "
+                            + "archivo de entrada <"+this.strEntrada3+">:"
+                            + "linea 1.");
             }
 
             while ((linea = this.accionesIn.readLine()) != null) {
